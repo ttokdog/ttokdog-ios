@@ -6,6 +6,8 @@ let targets: [Target] = [
     .feature(target: .init(
         dependencies: [
             .domain,
+            .feature(sources: .AppCoordinator),
+            .feature(sources: .Tab),
             .feature(sources: .Splash),
             .feature(sources: .Common),
             .feature(sources: .Onboarding),

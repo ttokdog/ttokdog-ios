@@ -12,5 +12,6 @@ let project = Project.makeModule(
             .shared(sources: .ThirdPartyAuth),
         ])),
         .feature(tests: .Onboarding, target: .init(dependencies: [.feature(sources: .Onboarding)])),
+        .feature(example: .Onboarding, target: .init(dependencies: [.feature(sources: .Onboarding)])),
     ]
 )

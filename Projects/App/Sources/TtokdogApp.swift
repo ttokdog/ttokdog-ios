@@ -1,10 +1,17 @@
 import SwiftUI
+import ComposableArchitecture
+import FeatureAppCoordinator
 
 @main
 struct TtokdogApp: App {
+    let store = Store(
+        initialState: AppFeature.State(),
+        reducer: { AppFeature() }
+    )
+
     var body: some Scene {
         WindowGroup {
-            Text("똑독")
+            AppView(store: store)
         }
     }
 }

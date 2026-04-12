@@ -11,5 +11,6 @@ let project = Project.makeModule(
             .shared(sources: .ThirdParty),
         ])),
         .feature(tests: .Splash, target: .init(dependencies: [.feature(sources: .Splash)])),
+        .feature(example: .Splash, target: .init(dependencies: [.feature(sources: .Splash)])),
     ]
 )
