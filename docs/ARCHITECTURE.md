@@ -5,6 +5,8 @@
 똑독(Ttokdog)은 **Tuist 기반 모듈러 아키텍처(TMA)** 로 구성된 iOS 앱입니다.
 SwiftUI + TCA(The Composable Architecture)를 사용하며, 레이어별로 명확히 분리된 모듈 구조를 따릅니다.
 
+> **현재 단계:** 아키텍처 셋업 완료, 앱 기능 개발 진입 전. Feature 모듈은 스텁 상태입니다.
+
 ### 기술 스택
 
 | 항목 | 버전/비고 |
@@ -68,7 +70,9 @@ DEVELOPMENT_TEAM_ID = YOUR_TEAM_ID
 3. `Project+Environment.swift`에서 `DEVELOPMENT_TEAM = $(DEVELOPMENT_TEAM_ID)`로 매핑
 4. 모든 프로젝트/타깃이 해당 값을 상속
 
-CI 환경에서는 `CODE_SIGNING_ALLOWED=NO`로 서명을 비활성화하여 simulator build만 수행합니다. (`.github/workflows/ci.yml` 참고)
+**xcconfigs는 `.gitignore`에 의해 커밋되지 않습니다.** `DEVELOPMENT_TEAM_ID` 등 민감한 빌드 설정값이 포함되기 때문입니다. 새 팀원은 로컬에서 `xcconfigs/` 디렉토리를 직접 생성하고 위 값을 입력해야 합니다.
+
+CI 환경에서는 `CODE_SIGNING_ALLOWED=NO` + `CODE_SIGNING_REQUIRED=NO`로 서명을 비활성화하여 simulator build만 수행하므로 xcconfig가 불필요합니다. (`.github/workflows/ci.yml` 참고)
 
 ### 주요 명령어 (Makefile)
 
@@ -145,7 +149,7 @@ Projects/Feature/
 **의존성 규칙:**
 - 일반 Feature: `.domain` + `.shared(sources: .DesignSystem)` + `.shared(sources: .ThirdParty)`
 - 인증 Feature: 위 + `.shared(sources: .ThirdPartyAuth)` (현재: Onboarding)
-- FeatureCommon: `.shared(sources: .DesignSystem)` + `.shared(sources: .Util)` (Domain 불필요)
+- Common: `.shared(sources: .DesignSystem)` + `.shared(sources: .Util)` (Domain 불필요)
 
 **Feature 파일 구조 (실제 코드):**
 
@@ -314,6 +318,24 @@ Shared 우산(`.shared`)은 DesignSystem, Util, Logger만 포함합니다.
 
 실제 resolve된 버전은 `Tuist/Package.resolved`에서 확인할 수 있습니다.
 
+### 버전 선택 근거
+
+| 패키지 | 최소 버전 | 근거 |
+|--------|----------|------|
+| swift-composable-architecture | 1.17.0 | TCA 1.17.0부터 Swift 6 strict concurrency 완전 지원 |
+| Nuke | 12.9.0 | 12.9.0에서 Swift 6 Sendable 준수 완료. 12.0.0~12.8.x는 concurrency 경고 발생 |
+| kakao-ios-sdk | 2.22.0 | SDK가 아직 Swift 6 미대응(swift-tools-version: 5.3). 최소 버전을 올려도 Swift 6 효과 없음 |
+| GoogleSignIn-iOS | 9.0.0 | 9.0.0에서 Swift 6 완전 지원. 8.x는 strict concurrency 미대응 |
+
+### Swift 6 호환성
+
+| 라이브러리 | Swift 6 대응 | 비고 |
+|-----------|:----------:|------|
+| TCA 1.17.0+ | ✅ | 완전 지원 |
+| Nuke 12.9.0+ | ✅ | 완전 지원 |
+| GoogleSignIn 9.0.0+ | ✅ | 완전 지원 |
+| Kakao SDK 2.x | ⚠️ | SDK 자체가 Swift 5 모드로 컴파일되어 빌드는 가능하나, 우리 코드에서 SDK 타입을 actor 경계에서 사용할 때 Sendable 경고 발생 가능. `@preconcurrency import`로 억제 가능 |
+
 ### re-export 정책
 
 | 라이브러리 | `@_exported` | 사용 방식 |
@@ -475,6 +497,43 @@ struct SplashTests {
 | xcconfig | `xcconfigs/Debug.xcconfig` | `xcconfigs/Release.xcconfig` |
 | 앱 이름 | Ttokdog-Debug | Ttokdog |
 | Bundle ID | com.ttokdog.Debug | com.ttokdog.app |
+
+---
+
+## CI/CD
+
+### GitHub Actions — PR 빌드 체크
+
+`main` 브랜치로의 PR이 생성되면 자동으로 빌드 검증이 실행됩니다.
+
+**워크플로우:** `.github/workflows/ci.yml`
+
+| 항목 | 설정 |
+|------|------|
+| 트리거 | `pull_request` → main, `workflow_dispatch` |
+| Runner | `macos-15` |
+| Xcode | 16.2 고정 (`xcode-select`) |
+| Tuist | `.mise.toml` 버전 자동 사용 (`jdx/mise-action`) |
+| 타임아웃 | 30분 |
+| Scheme | `Ttokdog-Debug` |
+| 코드 서명 | 비활성화 (simulator 빌드) |
+
+**캐싱:** `Tuist/.build` 디렉토리를 `Package.swift` + `Package.resolved` 해시로 캐싱합니다.
+
+**동시성 제어:** 같은 PR에서 새 push가 오면 이전 빌드를 자동 취소합니다.
+
+### 브랜치 보호
+
+`main` 브랜치에 GitHub Repository Ruleset이 적용되어 있습니다.
+
+| 규칙 | 설정 |
+|------|------|
+| Required status check | `build` (CI 통과 필수) |
+| Required reviews | 0명 (리뷰 대기 없이 머지 가능하도록) |
+| Dismiss stale reviews | false |
+| Require up-to-date branch | false |
+
+> 이 설정은 GitHub 서버(Repository Rulesets)에서 관리됩니다. 리뷰 프로세스를 강화할 필요가 생기면 Required reviews를 조정합니다.
 
 ---
 
