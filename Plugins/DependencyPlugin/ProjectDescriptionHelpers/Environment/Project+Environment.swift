@@ -38,7 +38,8 @@ public extension Project {
                 "SWIFT_VERSION": "6.0",
                 "OTHER_LDFLAGS": "$(inherited) -ObjC",
                 "ENABLE_USER_SCRIPT_SANDBOXING": "YES",
-                "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS": "YES",
+                "ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS": "YES",
+                "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS": "NO",
                 "STRING_CATALOG_GENERATE_SYMBOLS": "YES",
             ],
             configurations: [
