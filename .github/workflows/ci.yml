@@ -1,0 +1,59 @@
+name: iOS CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup mise
+        uses: jdx/mise-action@v2
+
+      - name: Cache Tuist dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            Tuist/.build
+          key: ${{ runner.os }}-tuist-${{ hashFiles('Tuist/Package.swift', 'Tuist/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-tuist-
+
+      - name: Create xcconfigs (gitignored)
+        run: |
+          mkdir -p xcconfigs
+          echo 'DEVELOPMENT_TEAM_ID =' > xcconfigs/Debug.xcconfig
+          echo 'DEVELOPMENT_TEAM_ID =' > xcconfigs/Release.xcconfig
+
+      - name: Install dependencies
+        run: mise exec -- tuist install
+
+      - name: Generate project
+        run: mise exec -- tuist generate --no-open
+
+      - name: Build for simulator
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -workspace ttokdog.xcworkspace \
+            -scheme "Ttokdog-Debug" \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build
