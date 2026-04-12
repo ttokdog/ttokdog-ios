@@ -11,5 +11,6 @@ let project = Project.makeModule(
             .shared(sources: .ThirdParty),
         ])),
         .feature(tests: .Map, target: .init(dependencies: [.feature(sources: .Map)])),
+        .feature(example: .Map, target: .init(dependencies: [.feature(sources: .Map)])),
     ]
 )

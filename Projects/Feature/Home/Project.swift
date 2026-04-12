@@ -11,5 +11,6 @@ let project = Project.makeModule(
             .shared(sources: .ThirdParty),
         ])),
         .feature(tests: .Home, target: .init(dependencies: [.feature(sources: .Home)])),
+        .feature(example: .Home, target: .init(dependencies: [.feature(sources: .Home)])),
     ]
 )
