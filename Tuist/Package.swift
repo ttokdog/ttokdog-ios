@@ -24,7 +24,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/kean/Nuke",
-            from: "12.0.0"
+            from: "12.9.0"
         ),
         .package(
             url: "https://github.com/kakao/kakao-ios-sdk",
@@ -32,7 +32,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/google/GoogleSignIn-iOS",
-            from: "8.0.0"
+            from: "9.0.0"
         ),
     ]
 )

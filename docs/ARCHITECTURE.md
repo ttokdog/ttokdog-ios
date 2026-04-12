@@ -308,9 +308,9 @@ Shared 우산(`.shared`)은 DesignSystem, Util, Logger만 포함합니다.
 | 패키지 | 최소 버전 | 용도 |
 |--------|----------|------|
 | swift-composable-architecture | 1.17.0 | TCA 상태 관리 |
-| Nuke | 12.0.0 | 이미지 로딩 (NukeUI) |
+| Nuke | 12.9.0 | 이미지 로딩 (NukeUI) — Swift 6 대응 최소 버전 |
 | kakao-ios-sdk | 2.22.0 | 카카오 소셜 로그인 |
-| GoogleSignIn-iOS | 8.0.0 | 구글 소셜 로그인 |
+| GoogleSignIn-iOS | 9.0.0 | 구글 소셜 로그인 — Swift 6 완전 지원 |
 
 실제 resolve된 버전은 `Tuist/Package.resolved`에서 확인할 수 있습니다.
 
