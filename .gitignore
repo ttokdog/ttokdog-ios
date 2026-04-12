@@ -1,0 +1,29 @@
+# Xcode
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+*.xcscmblueprint
+
+# Tuist generated
+Derived/
+Projects/*/Derived/
+Projects/*/*/Derived/
+
+# Tuist dependencies
+Tuist/.build/
+
+# Swift Package Manager
+.build/
+Scripts/GenerateModule/.build/
+
+# xcconfig (민감 값 주입용)
+xcconfigs/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# IDE
+*.swp
+*.swo
+*~

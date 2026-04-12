@@ -1,0 +1,17 @@
+import ProjectDescription
+import ProjectDescriptionHelpers
+import DependencyPlugin
+
+let project = Project.makeModule(
+    name: ModulePath.Shared.name + ModulePath.Shared.DesignSystem.rawValue,
+    targets: [
+        .shared(
+            sources: .DesignSystem,
+            target: .init(dependencies: [])
+        ),
+    ],
+    resourceSynthesizers: [
+        .assets(),
+        .fonts(),
+    ]
+)
