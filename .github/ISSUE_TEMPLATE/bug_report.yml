@@ -1,0 +1,80 @@
+name: "🐛 버그 리포트"
+description: "문제 상황을 재현 가능한 형태로 공유합니다."
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 버그 설명
+      description: 어떤 문제가 발생했는지 간단히 설명해주세요.
+      placeholder: |
+        예: 홈 화면 진입 직후 로딩이 끝나지 않고 화면이 멈춥니다.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 방법
+      description: 문제가 발생하는 과정을 순서대로 적어주세요.
+      placeholder: |
+        1. 앱 실행
+        2. 홈 화면으로 이동
+        3. 새로고침 버튼 탭
+        4. 로딩 이후 화면 멈춤 확인
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대 동작
+      description: 원래 기대했던 동작을 적어주세요.
+      placeholder: |
+        예: 새로고침 후 최신 데이터가 정상적으로 표시되어야 합니다.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 실제 동작
+      description: 실제로 발생한 동작을 적어주세요.
+      placeholder: |
+        예: 로딩 인디케이터가 계속 표시되고 입력이 먹지 않습니다.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ios_version
+    attributes:
+      label: 환경 정보
+      description: 문제가 발생한 iOS 버전을 선택해주세요.
+      options:
+        - iOS 18.0
+        - iOS 18.1
+        - iOS 18.2
+        - 기타
+    validations:
+      required: true
+
+  - type: input
+    id: module
+    attributes:
+      label: 관련 모듈
+      description: 문제가 의심되는 모듈이 있다면 적어주세요.
+      placeholder: "예: HomeFeature, Networking"
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots_logs
+    attributes:
+      label: 스크린샷/로그
+      description: 재현 화면, 에러 로그, 콘솔 출력 등이 있다면 첨부해주세요.
+      placeholder: |
+        필요 시 스크린샷, 크래시 로그, 콘솔 로그를 첨부해주세요.
+    validations:
+      required: false
