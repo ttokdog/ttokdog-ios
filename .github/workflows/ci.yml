@@ -37,6 +37,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-tuist-
 
+      - name: Create xcconfigs (gitignored)
+        run: |
+          mkdir -p xcconfigs
+          echo 'DEVELOPMENT_TEAM_ID =' > xcconfigs/Debug.xcconfig
+          echo 'DEVELOPMENT_TEAM_ID =' > xcconfigs/Release.xcconfig
+
       - name: Install dependencies
         run: mise exec -- tuist install
 
