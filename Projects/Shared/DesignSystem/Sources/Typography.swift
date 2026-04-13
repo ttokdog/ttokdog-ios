@@ -32,76 +32,80 @@ import SwiftUI
 public enum Typography {
     // MARK: - Display
 
-    /// Pretendard Bold 36 (-2%, 140%)
+    /// Pretendard Bold 36 (-2%, 120%)
     case display1
 
     // MARK: - Head
 
-    /// Pretendard Bold 32 (-2%, 140%)
+    /// Pretendard Bold 32 (-2%, 120%)
     case head1
-    /// Pretendard SemiBold 28 (-2%, 140%)
+    /// Pretendard SemiBold 28 (-2%, 120%)
     case head2
 
     // MARK: - Title
 
-    /// Pretendard SemiBold 24 (-2%, 140%)
+    /// Pretendard SemiBold 24 (-2%, 130%)
     case title1
-    /// Pretendard SemiBold 22 (-2%, 145%)
+    /// Pretendard SemiBold 22 (-2%, 130%)
     case title2
-    /// Pretendard SemiBold 20 (-2%, 150%)
+    /// Pretendard SemiBold 20 (-2%, 130%)
     case title3
-    /// Pretendard SemiBold 18 (-2%, 150%)
+    /// Pretendard SemiBold 18 (-2%, 130%)
     case title4
 
     // MARK: - Body
 
-    /// Pretendard Bold 18 (-2%, 150%)
+    /// Pretendard Bold 18 (-2%, 140%)
     case body1
-    /// Pretendard SemiBold 18 (-2%, 150%)
+    /// Pretendard SemiBold 18 (-2%, 140%)
     case body2
-    /// Pretendard Regular 18 (-2%, 150%)
+    /// Pretendard Medium 18 (-2%, 140%)
     case body3
-    /// Pretendard Bold 16 (-2%, 150%)
+    /// Pretendard Regular 18 (-2%, 140%)
     case body4
-    /// Pretendard Semibold 16 (-2%, 150%)
+    /// Pretendard Bold 16 (-2%, 140%)
     case body5
-    /// Pretendard Medium 16 (-2%, 150%)
+    /// Pretendard SemiBold 16 (-2%, 140%)
     case body6
-    /// Pretendard Semibold 14 (-2%, 150%)
+    /// Pretendard Medium 16 (-2%, 140%)
     case body7
-    /// Pretendard Medium 14 (-2%, 150%)
+    /// Pretendard Regular 16 (-2%, 140%)
     case body8
-    /// Pretendard Regular 14 (-2%, 150%)
+    /// Pretendard SemiBold 14 (-2%, 145%)
     case body9
-    
+    /// Pretendard Medium 14 (-2%, 145%)
+    case body10
+    /// Pretendard Regular 14 (-2%, 145%)
+    case body11
+
     // MARK: - Label
-    
-    /// Pretendard Semibold 13 (-2%, 150%)
+
+    /// Pretendard SemiBold 13 (-2%, 150%)
     case label1
     /// Pretendard Medium 13 (-2%, 150%)
     case label2
     /// Pretendard Regular 13 (-2%, 150%)
     case label3
-    
+
     // MARK: - Caption
-    
-    /// Pretendard Semibold 12 (-2%, 150%)
+
+    /// Pretendard SemiBold 12 (-2%, 150%)
     case caption1
     /// Pretendard Medium 12 (-2%, 150%)
     case caption2
     /// Pretendard Regular 12 (-2%, 150%)
     case caption3
-    
+
     // MARK: - Button
-    
-    /// Pretendard Semibold 16 (-2%, 150%)
+
+    /// Pretendard SemiBold 16 (-2%, 140%)
     case buttonL
-    /// Pretendard Semibold 14 (-2%, 150%)
+    /// Pretendard SemiBold 14 (-2%, 145%)
     case buttonM
-    
+
     // MARK: - Error
-    
-    /// Pretendard Semibold 14 (-2%, 150%)
+
+    /// Pretendard SemiBold 13 (-2%, 150%)
     case error
 
     /// 폰트 (Tuist 생성 accessor 기반, 자동 등록 보장)
@@ -128,38 +132,39 @@ private extension Typography {
     var fontConvertible: SharedDesignSystemFontConvertible {
         switch self {
         case .display1: SharedDesignSystemFontFamily.Pretendard.bold
-            
+
         case .head1: SharedDesignSystemFontFamily.Pretendard.bold
         case .head2: SharedDesignSystemFontFamily.Pretendard.semiBold
-            
+
         case .title1: SharedDesignSystemFontFamily.Pretendard.semiBold
         case .title2: SharedDesignSystemFontFamily.Pretendard.semiBold
         case .title3: SharedDesignSystemFontFamily.Pretendard.semiBold
         case .title4: SharedDesignSystemFontFamily.Pretendard.semiBold
-            
+
         case .body1: SharedDesignSystemFontFamily.Pretendard.bold
         case .body2: SharedDesignSystemFontFamily.Pretendard.semiBold
-        case .body3: SharedDesignSystemFontFamily.Pretendard.regular
-        case .body4: SharedDesignSystemFontFamily.Pretendard.bold
-        case .body5: SharedDesignSystemFontFamily.Pretendard.semiBold
-        case .body6: SharedDesignSystemFontFamily.Pretendard.medium
-        case .body7: SharedDesignSystemFontFamily.Pretendard.semiBold
-        case .body8: SharedDesignSystemFontFamily.Pretendard.medium
-        case .body9: SharedDesignSystemFontFamily.Pretendard.regular
-            
+        case .body3: SharedDesignSystemFontFamily.Pretendard.medium
+        case .body4: SharedDesignSystemFontFamily.Pretendard.regular
+        case .body5: SharedDesignSystemFontFamily.Pretendard.bold
+        case .body6: SharedDesignSystemFontFamily.Pretendard.semiBold
+        case .body7: SharedDesignSystemFontFamily.Pretendard.medium
+        case .body8: SharedDesignSystemFontFamily.Pretendard.regular
+        case .body9: SharedDesignSystemFontFamily.Pretendard.semiBold
+        case .body10: SharedDesignSystemFontFamily.Pretendard.medium
+        case .body11: SharedDesignSystemFontFamily.Pretendard.regular
+
         case .label1: SharedDesignSystemFontFamily.Pretendard.semiBold
         case .label2: SharedDesignSystemFontFamily.Pretendard.medium
-        case .label3:SharedDesignSystemFontFamily.Pretendard.regular
-            
-        case .caption1:SharedDesignSystemFontFamily.Pretendard.semiBold
-        case .caption2:SharedDesignSystemFontFamily.Pretendard.medium
-        case .caption3:SharedDesignSystemFontFamily.Pretendard.regular
-            
-        case .buttonL:SharedDesignSystemFontFamily.Pretendard.semiBold
-        case .buttonM:SharedDesignSystemFontFamily.Pretendard.semiBold
-            
-        case .error:SharedDesignSystemFontFamily.Pretendard.semiBold
-            
+        case .label3: SharedDesignSystemFontFamily.Pretendard.regular
+
+        case .caption1: SharedDesignSystemFontFamily.Pretendard.semiBold
+        case .caption2: SharedDesignSystemFontFamily.Pretendard.medium
+        case .caption3: SharedDesignSystemFontFamily.Pretendard.regular
+
+        case .buttonL: SharedDesignSystemFontFamily.Pretendard.semiBold
+        case .buttonM: SharedDesignSystemFontFamily.Pretendard.semiBold
+
+        case .error: SharedDesignSystemFontFamily.Pretendard.semiBold
         }
     }
 
@@ -184,6 +189,8 @@ private extension Typography {
         case .body7: 14
         case .body8: 14
         case .body9: 14
+        case .body10: 14
+        case .body11: 14
             
         case .label1: 13
         case .label2: 13
@@ -197,31 +204,34 @@ private extension Typography {
         case .buttonM: 14
             
         case .error: 13
+  
         }
     }
 
     /// 행간 비율 (디자인 시안 기준)
     var lineHeightRatio: CGFloat {
         switch self {
-        case .display1: 1.4
+        case .display1: 1.2
             
-        case .head1: 1.4
-        case .head2: 1.4
+        case .head1: 1.2
+        case .head2: 1.2
             
-        case .title1: 1.4
-        case .title2: 1.45
-        case .title3: 1.5
+        case .title1: 1.3
+        case .title2: 1.3
+        case .title3: 1.3
         case .title4: 1.5
             
-        case .body1: 1.5
-        case .body2: 1.5
-        case .body3: 1.5
-        case .body4: 1.5
-        case .body5: 1.5
-        case .body6: 1.5
-        case .body7: 1.5
-        case .body8: 1.5
-        case .body9: 1.5
+        case .body1: 1.4
+        case .body2: 1.4
+        case .body3: 1.4
+        case .body4: 1.4
+        case .body5: 1.4
+        case .body6: 1.4
+        case .body7: 1.4
+        case .body8: 1.4
+        case .body9: 1.45
+        case .body10: 1.45
+        case .body11: 1.45
             
         case .label1: 1.5
         case .label2: 1.5
@@ -231,8 +241,8 @@ private extension Typography {
         case .caption2: 1.5
         case .caption3: 1.5
             
-        case .buttonL: 1.5
-        case .buttonM: 1.5
+        case .buttonL: 1.4
+        case .buttonM: 1.45
             
         case .error: 1.5
         }
