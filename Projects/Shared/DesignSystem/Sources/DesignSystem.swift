@@ -5,19 +5,4 @@
 import Foundation
 import SwiftUI
 
-// MARK: - Gradient
-public extension LinearGradient {
-    
-    /// 앱의 메인 CTA 및 달성 지표에 사용되는 그라디언트
-    static let gradient01 = LinearGradient(
-        colors: [
-            Color("Gradient01Start", bundle: .module),
-            Color("Gradient01End", bundle: .module)
-        ],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-    
-}
-
 

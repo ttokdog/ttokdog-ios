@@ -36,6 +36,22 @@ public extension Color {
     static var gray50: Color { Color(asset: SharedDesignSystemAsset.gray50) }
     /// Gray 100 — 연한 회색 (구분선, 보조 배경)
     static var gray100: Color { Color(asset: SharedDesignSystemAsset.gray100) }
+    /// Gray 200 —
+    static var gray200: Color { Color(asset: SharedDesignSystemAsset.gray200) }
+    /// Gray 300 —
+    static var gray300: Color { Color(asset: SharedDesignSystemAsset.gray300) }
+    /// Gray 400 — Disabled button (비활성화된 버튼)
+    static var gray400: Color { Color(asset: SharedDesignSystemAsset.gray400) }
+    /// Gray 500 —
+    static var gray500: Color { Color(asset: SharedDesignSystemAsset.gray500) }
+    /// Gray 600 —
+    static var gray600: Color { Color(asset: SharedDesignSystemAsset.gray600) }
+    /// Gray 700 — Sub text (보조 텍스트 컬러)
+    static var gray700: Color { Color(asset: SharedDesignSystemAsset.gray700) }
+    /// Gray 800 —
+    static var gray800: Color { Color(asset: SharedDesignSystemAsset.gray800) }
+    /// Gray 900 — 가장 진한 회색  (메인, CTA 텍스트 컬러)
+    static var gray900: Color { Color(asset: SharedDesignSystemAsset.gray900) }
 }
 
 // MARK: - Semantic System

@@ -59,6 +59,50 @@ public enum Typography {
     case body1
     /// Pretendard SemiBold 18 (-2%, 150%)
     case body2
+    /// Pretendard Regular 18 (-2%, 150%)
+    case body3
+    /// Pretendard Bold 16 (-2%, 150%)
+    case body4
+    /// Pretendard Semibold 16 (-2%, 150%)
+    case body5
+    /// Pretendard Medium 16 (-2%, 150%)
+    case body6
+    /// Pretendard Semibold 14 (-2%, 150%)
+    case body7
+    /// Pretendard Medium 14 (-2%, 150%)
+    case body8
+    /// Pretendard Regular 14 (-2%, 150%)
+    case body9
+    
+    // MARK: - Label
+    
+    /// Pretendard Semibold 13 (-2%, 150%)
+    case label1
+    /// Pretendard Medium 13 (-2%, 150%)
+    case label2
+    /// Pretendard Regular 13 (-2%, 150%)
+    case label3
+    
+    // MARK: - Caption
+    
+    /// Pretendard Semibold 12 (-2%, 150%)
+    case caption1
+    /// Pretendard Medium 12 (-2%, 150%)
+    case caption2
+    /// Pretendard Regular 12 (-2%, 150%)
+    case caption3
+    
+    // MARK: - Button
+    
+    /// Pretendard Semibold 16 (-2%, 150%)
+    case buttonL
+    /// Pretendard Semibold 14 (-2%, 150%)
+    case buttonM
+    
+    // MARK: - Error
+    
+    /// Pretendard Semibold 14 (-2%, 150%)
+    case error
 
     /// 폰트 (Tuist 생성 accessor 기반, 자동 등록 보장)
     public var font: Font {
@@ -84,28 +128,75 @@ private extension Typography {
     var fontConvertible: SharedDesignSystemFontConvertible {
         switch self {
         case .display1: SharedDesignSystemFontFamily.Pretendard.bold
+            
         case .head1: SharedDesignSystemFontFamily.Pretendard.bold
         case .head2: SharedDesignSystemFontFamily.Pretendard.semiBold
+            
         case .title1: SharedDesignSystemFontFamily.Pretendard.semiBold
         case .title2: SharedDesignSystemFontFamily.Pretendard.semiBold
         case .title3: SharedDesignSystemFontFamily.Pretendard.semiBold
         case .title4: SharedDesignSystemFontFamily.Pretendard.semiBold
+            
         case .body1: SharedDesignSystemFontFamily.Pretendard.bold
         case .body2: SharedDesignSystemFontFamily.Pretendard.semiBold
+        case .body3: SharedDesignSystemFontFamily.Pretendard.regular
+        case .body4: SharedDesignSystemFontFamily.Pretendard.bold
+        case .body5: SharedDesignSystemFontFamily.Pretendard.semiBold
+        case .body6: SharedDesignSystemFontFamily.Pretendard.medium
+        case .body7: SharedDesignSystemFontFamily.Pretendard.semiBold
+        case .body8: SharedDesignSystemFontFamily.Pretendard.medium
+        case .body9: SharedDesignSystemFontFamily.Pretendard.regular
+            
+        case .label1: SharedDesignSystemFontFamily.Pretendard.semiBold
+        case .label2: SharedDesignSystemFontFamily.Pretendard.medium
+        case .label3:SharedDesignSystemFontFamily.Pretendard.regular
+            
+        case .caption1:SharedDesignSystemFontFamily.Pretendard.semiBold
+        case .caption2:SharedDesignSystemFontFamily.Pretendard.medium
+        case .caption3:SharedDesignSystemFontFamily.Pretendard.regular
+            
+        case .buttonL:SharedDesignSystemFontFamily.Pretendard.semiBold
+        case .buttonM:SharedDesignSystemFontFamily.Pretendard.semiBold
+            
+        case .error:SharedDesignSystemFontFamily.Pretendard.semiBold
+            
         }
     }
 
     var fontSize: CGFloat {
         switch self {
         case .display1: 36
+            
         case .head1: 32
         case .head2: 28
+            
         case .title1: 24
         case .title2: 22
         case .title3: 20
         case .title4: 18
+            
         case .body1: 18
         case .body2: 18
+        case .body3: 18
+        case .body4: 16
+        case .body5: 16
+        case .body6: 16
+        case .body7: 14
+        case .body8: 14
+        case .body9: 14
+            
+        case .label1: 13
+        case .label2: 13
+        case .label3: 13
+            
+        case .caption1: 12
+        case .caption2: 12
+        case .caption3: 12
+            
+        case .buttonL: 16
+        case .buttonM: 14
+            
+        case .error: 13
         }
     }
 
@@ -113,14 +204,37 @@ private extension Typography {
     var lineHeightRatio: CGFloat {
         switch self {
         case .display1: 1.4
+            
         case .head1: 1.4
         case .head2: 1.4
+            
         case .title1: 1.4
         case .title2: 1.45
         case .title3: 1.5
         case .title4: 1.5
+            
         case .body1: 1.5
         case .body2: 1.5
+        case .body3: 1.5
+        case .body4: 1.5
+        case .body5: 1.5
+        case .body6: 1.5
+        case .body7: 1.5
+        case .body8: 1.5
+        case .body9: 1.5
+            
+        case .label1: 1.5
+        case .label2: 1.5
+        case .label3: 1.5
+            
+        case .caption1: 1.5
+        case .caption2: 1.5
+        case .caption3: 1.5
+            
+        case .buttonL: 1.5
+        case .buttonM: 1.5
+            
+        case .error: 1.5
         }
     }
 }
