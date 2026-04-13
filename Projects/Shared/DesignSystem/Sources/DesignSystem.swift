@@ -3,3 +3,21 @@
 // Resources/ 폴더에 에셋 카탈로그, 폰트 파일을 포함하며 staticFramework로 번들링된다.
 
 import Foundation
+import SwiftUI
+
+// MARK: - Gradient
+public extension LinearGradient {
+    
+    /// 앱의 메인 CTA 및 달성 지표에 사용되는 그라디언트
+    static let gradient01 = LinearGradient(
+        colors: [
+            Color("Gradient01Start", bundle: .module),
+            Color("Gradient01End", bundle: .module)
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+    
+}
+
+
