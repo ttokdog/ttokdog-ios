@@ -3,6 +3,3 @@
 // Resources/ 폴더에 에셋 카탈로그, 폰트 파일을 포함하며 staticFramework로 번들링된다.
 
 import Foundation
-import SwiftUI
-
-
