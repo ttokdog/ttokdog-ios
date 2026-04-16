@@ -10,12 +10,15 @@ import ComposableArchitecture
 public struct OnboardingFeature: Reducer {
 
     @ObservableState
-    public enum State: Equatable {
-        case tutorial(TutorialFeature.State)
-
-        public init() {
-            self = .tutorial(TutorialFeature.State())
-        }
+    public struct State: Equatable {
+        public init() {}
+        
+        var currentPage: Int = 0
+        var page: [OnboardingPage] = [
+            .init(title: "", subtitle: "", isLast: false),
+            .init(title: "", subtitle: "", isLast: false),
+            .init(title: "", subtitle: "", isLast: true),
+        ]
     }
 
     public init() {}
