@@ -1,6 +1,10 @@
 import SwiftUI
 import ComposableArchitecture
 
+// MARK: - OnboardingView
+
+/// 온보딩 플로우 라우팅 View
+/// - OnboardingFeature의 enum State에 따라 child View를 표시
 public struct OnboardingView: View {
     @Bindable public var store: StoreOf<OnboardingFeature>
 
@@ -9,10 +13,12 @@ public struct OnboardingView: View {
     }
 
     public var body: some View {
-        Text("Onboarding")
-            .onAppear {
-                store.send(.onAppear)
+        switch store.state {
+        case .tutorial:
+            if let tutorialStore = store.scope(state: \.tutorial, action: \.tutorial) {
+                TutorialView(store: tutorialStore)
             }
+        }
     }
 }
 
