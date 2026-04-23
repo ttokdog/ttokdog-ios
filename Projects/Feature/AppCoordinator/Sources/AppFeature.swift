@@ -37,6 +37,10 @@ public struct AppFeature: Reducer {
                 }
                 return .none
 
+            case .onboarding(.delegate(.onboardingCompleted)):
+                state = .tab(TabFeature.State())
+                return .none
+
             case .splash, .onboarding, .tab:
                 return .none
             }
