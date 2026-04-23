@@ -22,10 +22,10 @@ public extension Image {
     static var eye: Image { Image(asset: SharedDesignSystemAsset.eye) }
     /// eyeOff - 비밀번호 숨기기
     static var eyeOff: Image { Image(asset: SharedDesignSystemAsset.eyeOff) }
-    /// back - 뒤로가기
-    static var back: Image { Image(asset: SharedDesignSystemAsset.back) }
-    /// close - 닫기
-    static var close: Image { Image(asset: SharedDesignSystemAsset.inputErase) }
+    /// navigationBack - 네비게이션바 뒤로가기
+    static var navigationBack: Image { Image(asset: SharedDesignSystemAsset.navigationBack) }
+    /// inputErase - 텍스트 입력 지우기
+    static var inputErase: Image { Image(asset: SharedDesignSystemAsset.inputErase) }
     
     
 }
