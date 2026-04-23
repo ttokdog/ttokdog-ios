@@ -1,6 +1,5 @@
 import SwiftUI
 import ComposableArchitecture
-import SharedDesignSystem
 
 // MARK: - OnboardingView
 
@@ -23,7 +22,6 @@ public struct OnboardingView: View {
     }
 }
 
-// MARK: - Preview
 #Preview {
     OnboardingView(
         store: .init(
