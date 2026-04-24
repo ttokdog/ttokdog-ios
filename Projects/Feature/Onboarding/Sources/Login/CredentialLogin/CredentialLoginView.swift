@@ -27,42 +27,62 @@ public struct CredentialLoginView: View {
             .padding(.horizontal, 20)
 
             if let errorMessage = store.errorMessage {
-                HStack {
+                HStack(alignment: .top, spacing: 4) {
+                    Image(systemName: "info.circle")
+                        .font(.system(size: 14))
+                        .foregroundStyle(Color.error)
+
                     Text(errorMessage)
                         .typography(.error)
                         .foregroundStyle(Color.error)
-                    Spacer()
+                        .multilineTextAlignment(.center)
                 }
-                .padding(.top, 8)
-                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                .padding(.bottom, 10)
+            } else {
+                Spacer()
+                    .frame(height: 50)
             }
 
             loginButton
-                .padding(.top, 24)
                 .padding(.horizontal, 20)
 
-            Spacer()
-
             bottomLinks
-                .padding(.bottom, 40)
+                .padding(.top, 20)
+            
+            Spacer()
         }
         .background(Color.gray50)
     }
 
     private var idField: some View {
-        TextField("아이디를 입력해주세요", text: $store.id)
-            .typography(.body8)
-            .padding(.horizontal, 16)
-            .frame(height: 52)
-            .background(Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(
-                        store.errorMessage != nil ? Color.error : Color.gray200,
-                        lineWidth: 1
-                    )
-            )
+        HStack {
+            TextField("아이디를 입력해주세요", text: $store.id)
+                .typography(.body11)
+
+            if !store.id.isEmpty {
+                Button {
+                    store.send(.binding(.set(\.id, "")))
+                } label: {
+                    Image.inputErase
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 18, height: 18)
+                        .foregroundStyle(Color.gray300)
+                }
+            }
+        }
+        .padding(.horizontal, 14)
+        .frame(height: 52)
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(
+                    store.errorMessage != nil ? Color.error : Color.gray200,
+                    lineWidth: 1
+                )
+        )
     }
 
     private var passwordField: some View {
@@ -74,19 +94,33 @@ public struct CredentialLoginView: View {
                     SecureField("비밀번호를 입력해주세요", text: $store.password)
                 }
             }
-            .typography(.body8)
+            .typography(.body11)
 
-            Button {
-                store.send(.togglePasswordVisibility)
-            } label: {
-                (store.isPasswordVisible ? Image.eye : Image.eyeOff)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 24, height: 24)
-                    .foregroundStyle(Color.gray400)
+            if !store.password.isEmpty {
+                Button {
+                    store.send(.togglePasswordVisibility)
+                } label: {
+                    (store.isPasswordVisible ? Image.eye : Image.eyeOff)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(Color.gray300)
+                }
+            }
+
+            if !store.password.isEmpty {
+                Button {
+                    store.send(.binding(.set(\.password, "")))
+                } label: {
+                    Image.inputErase
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 18, height: 18)
+                        .foregroundStyle(Color.gray400)
+                }
             }
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 14)
         .frame(height: 52)
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -105,11 +139,11 @@ public struct CredentialLoginView: View {
         } label: {
             Text("로그인")
                 .typography(.buttonL)
-                .foregroundStyle(.white)
+                .foregroundStyle(store.isLoginEnabled ? .white : Color.gray400)
                 .frame(maxWidth: .infinity)
                 .frame(height: 54)
-                .background(store.isLoginEnabled ? Color.primary500 : Color.gray400)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .background(store.isLoginEnabled ? Color.primary500 : Color.gray300)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
         }
         .disabled(!store.isLoginEnabled)
     }
@@ -122,26 +156,58 @@ public struct CredentialLoginView: View {
                 Text("회원가입")
                     .typography(.body10)
                     .foregroundStyle(Color.gray500)
+                    .underline()
             }
 
             Spacer()
 
             Button {
-                store.send(.findPasswordTapped)
+                store.send(.findAccountTapped)
             } label: {
                 Text("아이디/비밀번호 찾기")
                     .typography(.body10)
                     .foregroundStyle(Color.gray500)
+                    .underline()
             }
         }
         .padding(.horizontal, 20)
     }
 }
 
-#Preview {
+#Preview("기본") {
     CredentialLoginView(
         store: .init(
             initialState: CredentialLoginFeature.State(),
+            reducer: { CredentialLoginFeature() }
+        )
+    )
+}
+
+#Preview("로그인 실패") {
+    CredentialLoginView(
+        store: .init(
+            initialState: {
+                var state = CredentialLoginFeature.State()
+                state.id = "dddd"
+                state.password = "dddd"
+                state.errorMessage = "아이디 혹은 비밀번호가 일치하지 않아요."
+                return state
+            }(),
+            reducer: { CredentialLoginFeature() }
+        )
+    )
+}
+
+#Preview("계정 잠금") {
+    CredentialLoginView(
+        store: .init(
+            initialState: {
+                var state = CredentialLoginFeature.State()
+                state.id = "dddd"
+                state.password = "dddd"
+                state.errorMessage = "아이디 또는 비밀번호를 여러 번 잘못 입력했습니다.\n보안을 위해 10분 후 다시 시도해주세요."
+                return state
+            }(),
             reducer: { CredentialLoginFeature() }
         )
     )
