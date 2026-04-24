@@ -97,9 +97,7 @@ struct TutorialPageView: View {
     let page: TutorialPage
 
     var body: some View {
-        VStack(spacing: 16) {
-            Spacer()
-
+        VStack(spacing: 12) {
             Text(page.title)
                 .typography(.title1)
                 .foregroundStyle(Color.gray900)
@@ -111,9 +109,9 @@ struct TutorialPageView: View {
                 .multilineTextAlignment(.center)
 
             Spacer()
-            Spacer()
         }
         .padding(.horizontal, 20)
+        .padding(.top, 81)
     }
 }
 
