@@ -12,6 +12,8 @@ public struct CredentialLoginView: View {
         self.store = store
     }
 
+    // MARK: - Body
+
     public var body: some View {
         VStack(spacing: 0) {
             CustomNavigationBar(
@@ -54,6 +56,8 @@ public struct CredentialLoginView: View {
         }
         .background(Color.gray50)
     }
+
+    // MARK: - Input Fields
 
     private var idField: some View {
         HStack {
@@ -133,6 +137,8 @@ public struct CredentialLoginView: View {
         )
     }
 
+    // MARK: - Login Button
+
     private var loginButton: some View {
         Button {
             store.send(.loginTapped)
@@ -147,6 +153,8 @@ public struct CredentialLoginView: View {
         }
         .disabled(!store.isLoginEnabled)
     }
+
+    // MARK: - Bottom Links
 
     private var bottomLinks: some View {
         HStack {
@@ -173,6 +181,8 @@ public struct CredentialLoginView: View {
         .padding(.horizontal, 20)
     }
 }
+
+// MARK: - Preview
 
 #Preview("기본") {
     CredentialLoginView(

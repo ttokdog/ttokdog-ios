@@ -6,6 +6,8 @@ import ComposableArchitecture
 @Reducer
 public struct CredentialLoginFeature: Reducer {
 
+    // MARK: - State
+
     @ObservableState
     public struct State: Equatable {
         public var id: String = ""
@@ -22,6 +24,8 @@ public struct CredentialLoginFeature: Reducer {
 
     public init() {}
 
+    // MARK: - Action
+
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case loginTapped
@@ -34,6 +38,8 @@ public struct CredentialLoginFeature: Reducer {
             case loginCompleted
         }
     }
+
+    // MARK: - Reducer
 
     public var body: some ReducerOf<Self> {
         BindingReducer()

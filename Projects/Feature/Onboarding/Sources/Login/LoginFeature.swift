@@ -6,6 +6,8 @@ import ComposableArchitecture
 @Reducer
 public struct LoginFeature: Reducer {
 
+    // MARK: - State
+
     @ObservableState
     public struct State: Equatable {
         @Presents var credentialLogin: CredentialLoginFeature.State?
@@ -14,6 +16,8 @@ public struct LoginFeature: Reducer {
     }
 
     public init() {}
+
+    // MARK: - Action
 
     public enum Action {
         case googleLoginTapped
@@ -27,6 +31,8 @@ public struct LoginFeature: Reducer {
             case loginCompleted
         }
     }
+
+    // MARK: - Reducer
 
     public var body: some ReducerOf<Self> {
         Reduce { state, action in

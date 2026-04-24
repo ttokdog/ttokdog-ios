@@ -11,6 +11,8 @@ public struct LoginView: View {
         self.store = store
     }
 
+    // MARK: - Body
+
     public var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -63,6 +65,8 @@ public struct LoginView: View {
             }
         }
     }
+
+    // MARK: - Social Login
 
     private var socialLoginButtons: some View {
         VStack(spacing: 12) {
@@ -126,6 +130,8 @@ public struct LoginView: View {
         }
     }
 
+    // MARK: - Credential Login
+
     private var credentialLoginButton: some View {
         Button {
             store.send(.credentialLoginTapped)
@@ -137,6 +143,8 @@ public struct LoginView: View {
         }
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     LoginView(
