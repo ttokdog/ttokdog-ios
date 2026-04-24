@@ -14,30 +14,44 @@ public struct LoginView: View {
     public var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                Spacer()
-
                 // TODO: 일러스트 이미지 영역
-                RoundedRectangle(cornerRadius: 12)
+                Rectangle()
                     .fill(Color.gray100)
-                    .frame(height: 200)
-                    .padding(.horizontal, 40)
+                    .frame(width: 167, height: 167)
+                    .padding(.top, 109)
 
                 Spacer()
 
-                Text("우리 아이를 위한 스마트한 반려생활,\n똑독하게 시작해볼까요?")
-                    .typography(.body6)
-                    .foregroundStyle(Color.gray900)
-                    .multilineTextAlignment(.center)
-                    .padding(.bottom, 24)
+                VStack(spacing: 0) {
+                    (Text("우리 아이를 위한 ")
+                        .typographyText(.body6)
+                        + Text("스마트한 반려생활,")
+                        .typographyText(.body5)
+                        + Text("\n똑독하게 시작해볼까요?")
+                        .typographyText(.body6))
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.center)
+                        .typographyLineSpacing(.body6)
+                        .padding(.top, 24)
+                        .padding(.bottom, 26)
 
-                socialLoginButtons
-                    .padding(.horizontal, 20)
+                    socialLoginButtons
+                        .padding(.horizontal, 20)
 
-                credentialLoginButton
-                    .padding(.top, 16)
-                    .padding(.bottom, 40)
+                    credentialLoginButton
+                        .padding(.top, 18)
+                        .padding(.bottom, 34)
+                }
+                .background(
+                    UnevenRoundedRectangle(
+                        topLeadingRadius: 15,
+                        topTrailingRadius: 15
+                    )
+                    .fill(Color.primary500)
+                )
             }
             .background(Color.gray50)
+            .ignoresSafeArea(edges: .bottom)
             .navigationDestination(
                 item: $store.scope(
                     state: \.credentialLogin,
@@ -51,7 +65,7 @@ public struct LoginView: View {
     }
 
     private var socialLoginButtons: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 12) {
             socialButton(
                 icon: .googleIcon,
                 title: "Google로 시작하기",
@@ -86,20 +100,29 @@ public struct LoginView: View {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            HStack(spacing: 8) {
+            HStack(spacing: 0) {
                 icon
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24, height: 24)
+                    .padding(.leading, 24)
+
+                Spacer()
 
                 Text(title)
                     .typography(.buttonL)
                     .foregroundStyle(foregroundColor)
+
+                Spacer()
+
+                Color.clear
+                    .frame(width: 24, height: 24)
+                    .padding(.trailing, 24)
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 54)
+            .frame(height: 64)
             .background(backgroundColor)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: 15))
         }
     }
 
@@ -108,8 +131,9 @@ public struct LoginView: View {
             store.send(.credentialLoginTapped)
         } label: {
             Text("다른계정으로 로그인")
-                .typography(.body10)
-                .foregroundStyle(Color.gray400)
+                .typography(.body11)
+                .foregroundStyle(Color.gray600)
+                .underline()
         }
     }
 }
