@@ -18,6 +18,10 @@ public struct OnboardingView: View {
             if let tutorialStore = store.scope(state: \.tutorial, action: \.tutorial) {
                 TutorialView(store: tutorialStore)
             }
+        case .login:
+            if let loginStore = store.scope(state: \.login, action: \.login) {
+                LoginView(store: loginStore)
+            }
         }
     }
 }

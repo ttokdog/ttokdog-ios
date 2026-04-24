@@ -12,6 +12,7 @@ public struct OnboardingFeature: Reducer {
     @ObservableState
     public enum State: Equatable {
         case tutorial(TutorialFeature.State)
+        case login(LoginFeature.State)
 
         public init() {
             self = .tutorial(TutorialFeature.State())
@@ -22,6 +23,7 @@ public struct OnboardingFeature: Reducer {
 
     public enum Action {
         case tutorial(TutorialFeature.Action)
+        case login(LoginFeature.Action)
         case delegate(Delegate)
 
         public enum Delegate {
@@ -33,14 +35,21 @@ public struct OnboardingFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .tutorial(.delegate(.tutorialCompleted)):
+                state = .login(LoginFeature.State())
+                return .none
+
+            case .login(.delegate(.loginCompleted)):
                 return .send(.delegate(.onboardingCompleted))
 
-            case .tutorial, .delegate:
+            case .tutorial, .login, .delegate:
                 return .none
             }
         }
         .ifCaseLet(\.tutorial, action: \.tutorial) {
             TutorialFeature()
+        }
+        .ifCaseLet(\.login, action: \.login) {
+            LoginFeature()
         }
     }
 }

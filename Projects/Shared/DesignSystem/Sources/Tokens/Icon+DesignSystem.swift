@@ -26,7 +26,15 @@ public extension Image {
     static var navigationBack: Image { Image(asset: SharedDesignSystemAsset.navigationBack) }
     /// inputErase - 텍스트 입력 지우기
     static var inputErase: Image { Image(asset: SharedDesignSystemAsset.inputErase) }
-    
-    
+
+    // MARK: - 소셜 로그인 아이콘
+
+    /// Google 로그인
+    static var googleIcon: Image { Image(asset: SharedDesignSystemAsset.googleIcon) }
+    /// Apple 로그인
+    static var appleIcon: Image { Image(asset: SharedDesignSystemAsset.appleIcon) }
+    /// Kakao 로그인
+    static var kakaoIcon: Image { Image(asset: SharedDesignSystemAsset.kakaoIcon) }
+
 }
 
