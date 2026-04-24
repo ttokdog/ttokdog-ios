@@ -5,6 +5,7 @@ import SharedDesignSystem
 // MARK: - LoginView
 
 public struct LoginView: View {
+    private let kakaoYellow = Color(red: 254/255, green: 229/255, blue: 0/255)
     @Bindable public var store: StoreOf<LoginFeature>
 
     public init(store: StoreOf<LoginFeature>) {
@@ -89,7 +90,7 @@ public struct LoginView: View {
             socialButton(
                 icon: .kakaoIcon,
                 title: "Kakao로 시작하기",
-                backgroundColor: Color(red: 254/255, green: 229/255, blue: 0/255),
+                backgroundColor: kakaoYellow,
                 foregroundColor: .black,
                 action: { store.send(.kakaoLoginTapped) }
             )

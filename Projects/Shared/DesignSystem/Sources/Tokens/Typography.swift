@@ -61,15 +61,15 @@ public enum Typography {
     case body2
     /// Pretendard Medium 18 (-2%, 140%)
     case body3
-    /// Pretendard Regular 18 (-2%, 140%)
+    /// Pretendard Regular 16 (-2%, 140%)
     case body4
     /// Pretendard Bold 16 (-2%, 140%)
     case body5
     /// Pretendard SemiBold 16 (-2%, 140%)
     case body6
-    /// Pretendard Medium 16 (-2%, 140%)
+    /// Pretendard Medium 14 (-2%, 140%)
     case body7
-    /// Pretendard Regular 16 (-2%, 140%)
+    /// Pretendard Regular 14 (-2%, 140%)
     case body8
     /// Pretendard SemiBold 14 (-2%, 145%)
     case body9

@@ -57,6 +57,10 @@ public struct LoginFeature: Reducer {
                 state.credentialLogin = nil
                 return .send(.delegate(.loginCompleted))
 
+            case .credentialLogin(.presented(.backButtonTapped)):
+                state.credentialLogin = nil
+                return .none
+
             case .credentialLogin:
                 return .none
 

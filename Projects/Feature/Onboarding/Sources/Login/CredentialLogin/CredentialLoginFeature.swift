@@ -32,6 +32,7 @@ public struct CredentialLoginFeature: Reducer {
         case togglePasswordVisibility
         case signUpTapped
         case findAccountTapped
+        case backButtonTapped
         case delegate(Delegate)
 
         public enum Delegate {
@@ -64,6 +65,9 @@ public struct CredentialLoginFeature: Reducer {
 
             case .findAccountTapped:
                 // TODO: 아이디/비밀번호 찾기 화면 연결
+                return .none
+
+            case .backButtonTapped:
                 return .none
 
             case .delegate:

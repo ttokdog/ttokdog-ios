@@ -6,7 +6,6 @@ import SharedDesignSystem
 
 public struct CredentialLoginView: View {
     @Bindable public var store: StoreOf<CredentialLoginFeature>
-    @Environment(\.dismiss) private var dismiss
 
     public init(store: StoreOf<CredentialLoginFeature>) {
         self.store = store
@@ -18,7 +17,7 @@ public struct CredentialLoginView: View {
         VStack(spacing: 0) {
             CustomNavigationBar(
                 title: "다른계정으로 로그인",
-                onBack: { dismiss() }
+                onBack: { store.send(.backButtonTapped) }
             )
 
             VStack(spacing: 16) {
@@ -42,7 +41,7 @@ public struct CredentialLoginView: View {
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             } else {
-                Spacer()
+                Color.clear
                     .frame(height: 50)
             }
 
@@ -51,10 +50,16 @@ public struct CredentialLoginView: View {
 
             bottomLinks
                 .padding(.top, 20)
-            
+
             Spacer()
         }
         .background(Color.gray50)
+        .onTapGesture {
+            UIApplication.shared.sendAction(
+                #selector(UIResponder.resignFirstResponder),
+                to: nil, from: nil, for: nil
+            )
+        }
     }
 
     // MARK: - Input Fields
@@ -66,7 +71,7 @@ public struct CredentialLoginView: View {
 
             if !store.id.isEmpty {
                 Button {
-                    store.send(.binding(.set(\.id, "")))
+                    store.id = ""
                 } label: {
                     Image.inputErase
                         .resizable()
@@ -114,7 +119,7 @@ public struct CredentialLoginView: View {
 
             if !store.password.isEmpty {
                 Button {
-                    store.send(.binding(.set(\.password, "")))
+                    store.password = ""
                 } label: {
                     Image.inputErase
                         .resizable()
