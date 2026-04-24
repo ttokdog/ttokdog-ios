@@ -267,3 +267,20 @@ public extension View {
         modifier(TypographyModifier(typography: style))
     }
 }
+
+public extension Text {
+    /// `Text + Text` 조합에서 사용할 수 있는 타이포그래피 적용 방식입니다.
+    /// `lineSpacing`은 `Text`를 반환하지 않으므로, 결합된 최종 블록에 별도로 적용해야 합니다.
+    func typographyText(_ style: Typography) -> Text {
+        self
+            .font(style.font)
+            .tracking(style.tracking)
+    }
+}
+
+public extension View {
+    /// 여러 `Text`를 결합한 뒤 블록 단위로 행간을 적용할 때 사용합니다.
+    func typographyLineSpacing(_ style: Typography) -> some View {
+        lineSpacing(style.lineSpacing)
+    }
+}
