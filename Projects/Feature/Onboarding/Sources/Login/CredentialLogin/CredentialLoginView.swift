@@ -28,18 +28,9 @@ public struct CredentialLoginView: View {
             .padding(.horizontal, 20)
 
             if let errorMessage = store.errorMessage {
-                HStack(alignment: .top, spacing: 4) {
-                    Image(systemName: "info.circle")
-                        .font(.system(size: 14))
-                        .foregroundStyle(Color.error)
-
-                    Text(errorMessage)
-                        .typography(.error)
-                        .foregroundStyle(Color.error)
-                        .multilineTextAlignment(.center)
-                }
-                .padding(.top, 20)
-                .padding(.bottom, 10)
+                ErrorLabel(message: errorMessage)
+                    .padding(.top, 20)
+                    .padding(.bottom, 10)
             } else {
                 Color.clear
                     .frame(height: 50)
@@ -54,6 +45,15 @@ public struct CredentialLoginView: View {
             Spacer()
         }
         .background(Color.gray50)
+        .navigationDestination(
+            item: $store.scope(
+                state: \.findAccount,
+                action: \.findAccount
+            )
+        ) { findAccountStore in
+            FindAccountView(store: findAccountStore)
+                .navigationBarBackButtonHidden()
+        }
         .onTapGesture {
             UIApplication.shared.sendAction(
                 #selector(UIResponder.resignFirstResponder),
@@ -65,80 +65,21 @@ public struct CredentialLoginView: View {
     // MARK: - Input Fields
 
     private var idField: some View {
-        HStack {
-            TextField("아이디를 입력해주세요", text: $store.id)
-                .typography(.body11)
-
-            if !store.id.isEmpty {
-                Button {
-                    store.id = ""
-                } label: {
-                    Image.inputErase
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .foregroundStyle(Color.gray300)
-                }
-            }
-        }
-        .padding(.horizontal, 14)
-        .frame(height: 52)
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(
-                    store.errorMessage != nil ? Color.error : Color.gray200,
-                    lineWidth: 1
-                )
+        InputField(
+            placeholder: "아이디를 입력해주세요",
+            text: $store.id,
+            hasError: store.errorMessage != nil
         )
     }
 
     private var passwordField: some View {
-        HStack {
-            Group {
-                if store.isPasswordVisible {
-                    TextField("비밀번호를 입력해주세요", text: $store.password)
-                } else {
-                    SecureField("비밀번호를 입력해주세요", text: $store.password)
-                }
-            }
-            .typography(.body11)
-
-            if !store.password.isEmpty {
-                Button {
-                    store.send(.togglePasswordVisibility)
-                } label: {
-                    (store.isPasswordVisible ? Image.eye : Image.eyeOff)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(Color.gray300)
-                }
-            }
-
-            if !store.password.isEmpty {
-                Button {
-                    store.password = ""
-                } label: {
-                    Image.inputErase
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .foregroundStyle(Color.gray400)
-                }
-            }
-        }
-        .padding(.horizontal, 14)
-        .frame(height: 52)
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(
-                    store.errorMessage != nil ? Color.error : Color.gray200,
-                    lineWidth: 1
-                )
+        InputField(
+            placeholder: "비밀번호를 입력해주세요",
+            text: $store.password,
+            isSecure: true,
+            isPasswordVisible: store.isPasswordVisible,
+            onToggleVisibility: { store.send(.togglePasswordVisibility) },
+            hasError: store.errorMessage != nil
         )
     }
 

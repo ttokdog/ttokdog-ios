@@ -4,7 +4,7 @@ import ComposableArchitecture
 // MARK: - CredentialLoginFeature
 
 @Reducer
-public struct CredentialLoginFeature: Reducer {
+public struct CredentialLoginFeature {
 
     // MARK: - State
 
@@ -14,6 +14,7 @@ public struct CredentialLoginFeature: Reducer {
         public var password: String = ""
         public var isPasswordVisible: Bool = false
         public var errorMessage: String?
+        @Presents var findAccount: FindAccountFeature.State?
 
         public var isLoginEnabled: Bool {
             !id.isEmpty && !password.isEmpty
@@ -32,6 +33,7 @@ public struct CredentialLoginFeature: Reducer {
         case togglePasswordVisibility
         case signUpTapped
         case findAccountTapped
+        case findAccount(PresentationAction<FindAccountFeature.Action>)
         case backButtonTapped
         case delegate(Delegate)
 
@@ -64,7 +66,15 @@ public struct CredentialLoginFeature: Reducer {
                 return .none
 
             case .findAccountTapped:
-                // TODO: 아이디/비밀번호 찾기 화면 연결
+                state.findAccount = FindAccountFeature.State()
+                return .none
+
+            case .findAccount(.presented(.backButtonTapped)),
+                 .findAccount(.presented(.delegate(.navigateToLogin))):
+                state.findAccount = nil
+                return .none
+
+            case .findAccount:
                 return .none
 
             case .backButtonTapped:
@@ -73,6 +83,9 @@ public struct CredentialLoginFeature: Reducer {
             case .delegate:
                 return .none
             }
+        }
+        .ifLet(\.$findAccount, action: \.findAccount) {
+            FindAccountFeature()
         }
     }
 }
