@@ -27,7 +27,7 @@ struct SignupPasswordInputField: View {
             if !text.isEmpty {
                 HStack(spacing: 14) {
                     Button(action: onToggleVisibility) {
-                        isVisible ? Image.eyeOff : Image.eye
+                        isVisible ? Image.eyeOff : Image.eyeOn
                     }
                     
                     Button(action: onClear) {
