@@ -30,7 +30,7 @@ struct InputField: View {
                 Button {
                     onToggleVisibility?()
                 } label: {
-                    (isPasswordVisible ? Image.eye : Image.eyeOff)
+                    (isPasswordVisible ? Image.eyeOn : Image.eyeOff)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 24, height: 24)
