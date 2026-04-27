@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Input_Erase_Icon.svg",
+      "filename" : "Correction_1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Correction_2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Correction_3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
