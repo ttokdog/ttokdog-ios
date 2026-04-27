@@ -93,7 +93,7 @@ public struct CustomNavigationBar: View {
     CustomNavigationBar(
         title: "프로필",
         onBack: {},
-        trailing: .init(icon: .eye, action: {})
+        trailing: .init(icon: .eyeOn, action: {})
     )
 }
 

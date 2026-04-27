@@ -10,7 +10,7 @@ import SwiftUI
 ///
 /// ## 사용법
 /// ```swift
-/// Image.eye
+/// Image.eyeOn
 /// Image.google
 /// ```
 
@@ -18,8 +18,8 @@ public extension Image {
     
     // MARK: - 공통 아이콘
     
-    /// eye - 비밀번호 보기
-    static var eye: Image { Image(asset: SharedDesignSystemAsset.eye) }
+    /// eyeOn - 비밀번호 보기
+    static var eyeOn: Image { Image(asset: SharedDesignSystemAsset.eyeOn) }
     /// eyeOff - 비밀번호 숨기기
     static var eyeOff: Image { Image(asset: SharedDesignSystemAsset.eyeOff) }
     /// navigationBack - 네비게이션바 뒤로가기
