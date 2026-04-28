@@ -9,37 +9,51 @@ struct SignupFeature: Reducer {
     
     @ObservableState
     public struct State: Equatable {
-        // 입력값
+        // MARK: - 입력값
         public var id: String = ""
         public var password: String = ""
         public var passwordConfirm: String = ""
         public var email: String = ""
         public var nickname: String = ""
         
-        // 아이디 중복확인
+        // MARK: - 아이디
         public var idCheckResult: IDCheckResult? = nil
         public var isCheckingId: Bool = false
         
-        // 비밀번호 표시
+        // MARK: - 비밀번호
         public var isPasswordVisible: Bool = false
         public var isPasswordConfirmVisible: Bool = false
         
-        
-        // 닉네임 중복확인
+        // MARK: - 닉네임
         public var nicknameCheckResult: NicknameCheckResult? = nil
         public var isCheckingNickname: Bool = false
         
-        // 아이디 형식
+        
+        // MARK: - 유효성 검사
+        
+        /// 아이디 형식 (6~15자, 영문 소문자/숫자)
         public var isIdValid: Bool {
             let regex = #"^[a-z0-9]{6,15}$"#
             return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: id)
         }
+      
         
-        // 비밀번호 형식
-        public var isPasswordValid: Bool {
-            let regex = #"^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,20}$"#
+        /// 비밀번호 길이 (8~20자)
+        public var isPasswordLengthValid: Bool {
+            (8...20).contains(password.count)
+        }
+
+        /// 비밀번호 특수문자 포함
+        public var isPasswordContainsSpecialChar: Bool {
+            let regex = #".*[!@#$%^&*].*"#
             return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: password)
         }
+        
+        /// 비밀번호 확인 불일치
+        public var isPasswordConfirmMismatch: Bool {
+            !passwordConfirm.isEmpty && password != passwordConfirm
+        }
+        
         
         // 이메일 형식
         public var isEmailValid: Bool {
@@ -47,23 +61,13 @@ struct SignupFeature: Reducer {
             return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: email)
         }
         
-        // 닉네임 형식
+        /// 닉네임 형식 (1~10자, 한글/영문/숫자)
         public var isNicknameValid: Bool {
             let regex = #"^[가-힣a-zA-Z0-9]{1,10}$"#
             return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: nickname)
         }
         
-        // 회원가입 활성화
-//        public var isSignUpEnabled: Bool {
-//            isIdValid
-//            && idCheckResult == .available
-//            && isPasswordValid
-//            && !isPasswordConfirmMismatch
-//            && !passwordConfirm.isEmpty
-//            && isEmailVerified
-//            && isNicknameValid
-//            && nicknameCheckResult == .available
-//        }
+
         
         
         public init() {}
@@ -106,7 +110,49 @@ struct SignupFeature: Reducer {
     // MARK: - Reducer
     
     public var body: some ReducerOf<Self> {
+        BindingReducer()
 
+        Reduce { state, action in
+            switch action {
+                
+            case .binding(_):
+                return .none
+            case .backButtonTapped:
+                return .none
+            case .checkDuplicateIdTapped:
+                return .none
+            case .checkDuplicateIdResponse(_):
+                return .none
+            case .clearIdTapped:
+                state.id = ""
+                return .none
+            case .togglePasswordVisibility:
+                return .none
+            case .togglePasswordConfirmVisibility:
+                return .none
+            case .clearPasswordTapped:
+                state.password = ""
+                return .none
+            case .clearPasswordConfirmTapped:
+                state.passwordConfirm = ""
+                return .none
+            case .clearEmailTapped:
+                state.email = ""
+                return .none
+            case .checkDuplicateNicknameTapped:
+                return .none
+            case .checkDuplicateNicknameResponse(_):
+                return .none
+            case .clearNicknameTapped:
+                state.nickname = ""
+                return .none
+            case .signUpTapped:
+                return .none
+            }
+            
+        }
+        
+        
     }
     
 
