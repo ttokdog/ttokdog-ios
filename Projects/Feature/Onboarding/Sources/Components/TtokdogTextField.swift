@@ -6,14 +6,10 @@ struct TtokdogTextField: View {
     
     @Binding var text: String
     
-    let title: String
-    let description: String
     let placeholder: String
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            titleView
-
+        VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 14) {
                 textFieldView
                 duplicateCheckButton()
@@ -25,25 +21,11 @@ struct TtokdogTextField: View {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color.gray200, lineWidth: 1.2)
             )
-            
             // TODO: 에러 문구
+            
         }
     }
     
-    // MARK: - 타이틀
-    private var titleView: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            // 타이틀 문구
-            Text(title)
-                .foregroundStyle(Color.gray700)
-                .typography(.body9)
-            
-            // 설명 문구
-            Text(description)
-                .foregroundStyle(Color.gray500)
-                .typography(.body11)
-        }
-    }
     
     // MARK: - 텍스트 필드
     private var textFieldView: some View {
@@ -93,12 +75,9 @@ struct TtokdogTextField: View {
 
 
 // MARK: - Preview
-
 #Preview {
     TtokdogTextField(
         text: .constant("dsdsdsdsds"),
-        title: "타이틀",
-        description: "설명",
         placeholder: "플레이스홀더"
     )
 }
