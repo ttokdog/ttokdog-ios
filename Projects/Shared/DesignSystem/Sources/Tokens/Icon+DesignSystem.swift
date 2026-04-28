@@ -15,17 +15,29 @@ import SwiftUI
 /// ```
 
 public extension Image {
-    
+
     // MARK: - 공통 아이콘
-    
+
     /// eyeOn - 비밀번호 보기
     static var eyeOn: Image { Image(asset: SharedDesignSystemAsset.eyeOn) }
     /// eyeOff - 비밀번호 숨기기
     static var eyeOff: Image { Image(asset: SharedDesignSystemAsset.eyeOff) }
     /// navigationBack - 네비게이션바 뒤로가기
     static var navigationBack: Image { Image(asset: SharedDesignSystemAsset.navigationBack) }
+    /// navigationClose - 닫기
+    static var navigationClose: Image { Image(asset: SharedDesignSystemAsset.navigationClose) }
     /// inputErase - 텍스트 입력 지우기
     static var inputErase: Image { Image(asset: SharedDesignSystemAsset.inputErase) }
+    /// check - 체크
+    static var check: Image { Image(asset: SharedDesignSystemAsset.check) }
+    /// checkFill - 체크 (채움)
+    static var checkFill: Image { Image(asset: SharedDesignSystemAsset.checkFill) }
+    /// correction - 수정
+    static var correction: Image { Image(asset: SharedDesignSystemAsset.correction) }
+    /// search - 검색
+    static var search: Image { Image(asset: SharedDesignSystemAsset.search) }
+    /// footprint - 발자국
+    static var footprint: Image { Image(asset: SharedDesignSystemAsset.footprint) }
 
     // MARK: - 소셜 로그인 아이콘
 
