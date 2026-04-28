@@ -24,6 +24,7 @@ struct SignupView: View {
                         
                         DuplicateCheckInputField(
                             text: $store.id,
+                            minimumLength: 6,
                             placeholder: "생성할 아이디를 입력해주세요",
                             checkResult: nil,
                             errorMessage: "중복된 아이디입니다.",
@@ -31,8 +32,10 @@ struct SignupView: View {
                             onClear: { store.send(.clearIdTapped)},
                             onDuplicateCheck: { store.send(.checkDuplicateIdTapped) }
                         )
+                        
+                        // TODO: 에러 문구
+                        
                     }
-                    
                     
                     // MARK: - 비밀번호
                     VStack(alignment: .leading, spacing: 6) {
@@ -56,6 +59,8 @@ struct SignupView: View {
                                 onToggleVisibility: { store.send(.togglePasswordConfirmVisibility) },
                                 onClear: { store.send(.clearPasswordConfirmTapped) }
                             )
+                            
+                            // TODO: 에러 문구
                         }
                     }
                     
@@ -70,6 +75,7 @@ struct SignupView: View {
                             onClear: { store.send(.clearEmailTapped) }
                         )
                         
+                        // TODO: 에러 문구
                         
                     }
                     
@@ -79,6 +85,7 @@ struct SignupView: View {
                         
                         DuplicateCheckInputField(
                             text: $store.nickname,
+                            minimumLength: 1,
                             placeholder: "사용할 닉네임을 입력하세요",
                             checkResult: nil,
                             errorMessage: "중복된 닉네임입니다.",
@@ -86,6 +93,9 @@ struct SignupView: View {
                             onClear: { store.send(.clearNicknameTapped)},
                             onDuplicateCheck: { store.send(.checkDuplicateNicknameTapped) }
                         )
+                        
+                        // TODO: 에러 문구
+                        
                     }
                     
                 }

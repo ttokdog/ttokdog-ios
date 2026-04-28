@@ -13,7 +13,7 @@ enum DuplicateCheckResult {
 struct DuplicateCheckInputField: View {
     
     @Binding var text: String
-    
+    var minimumLength: Int
     let placeholder: String
     let checkResult: DuplicateCheckResult?
     let errorMessage: String
@@ -58,7 +58,8 @@ struct DuplicateCheckInputField: View {
     private var buttonForegroundColor: Color {
         switch checkResult {
         case .duplicate: return Color.gray400  // 중복이면 그레이
-        case .none: return text.isEmpty ? Color.gray400 : Color.primary500
+//        case .none: return text.isEmpty ? Color.gray400 : Color.primary500
+        case .none: return text.count >= minimumLength ? Color.primary500 : Color.gray400
         case .available: return Color.white
         }
     }
@@ -66,7 +67,8 @@ struct DuplicateCheckInputField: View {
     private var buttonBorderColor: Color {
         switch checkResult {
         case .duplicate: return Color.gray300  // 중복이면 그레이
-        case .none: return text.isEmpty ? Color.gray300 : Color.primary500
+//        case .none: return text.isEmpty ? Color.gray300 : Color.primary500
+        case .none: return text.count >= minimumLength ? Color.primary500 : Color.gray300
         case .available: return Color.primary500
         }
     }
@@ -118,7 +120,7 @@ struct DuplicateCheckInputField: View {
                     )
             }
         }
-        .disabled(text.isEmpty || checkResult == .available) // 텍스트 비어있거나 이미 사용가능 확인된 경우 버튼 비활성화
+        .disabled(text.count < minimumLength || checkResult == .available) // 텍스트 비어있거나 이미 사용가능 확인된 경우 버튼 비활성화
     }
     
 }
@@ -128,6 +130,7 @@ struct DuplicateCheckInputField: View {
 #Preview("미입력") {
     DuplicateCheckInputField(
         text: .constant(""),
+        minimumLength: 6,
         placeholder: "생성할 아이디를 입력해주세요",
         checkResult: nil,
         errorMessage: "중복된 아이디입니다.",
@@ -140,7 +143,8 @@ struct DuplicateCheckInputField: View {
 
 #Preview("입력중") {
     DuplicateCheckInputField(
-        text: .constant("ttokdog"),
+        text: .constant("ttoㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"),
+        minimumLength: 6,
         placeholder: "생성할 아이디를 입력해주세요",
         checkResult: nil,
         errorMessage: "중복된 아이디입니다.",
@@ -154,6 +158,7 @@ struct DuplicateCheckInputField: View {
 #Preview("중복") {
     DuplicateCheckInputField(
         text: .constant("dogdogdog"),
+        minimumLength: 6,
         placeholder: "생성할 아이디를 입력해주세요",
         checkResult: .duplicate,
         errorMessage: "중복된 아이디입니다.",
@@ -167,6 +172,7 @@ struct DuplicateCheckInputField: View {
 #Preview("사용가능") {
     DuplicateCheckInputField(
         text: .constant("ttokdog"),
+        minimumLength: 6,
         placeholder: "생성할 아이디를 입력해주세요",
         checkResult: .available,
         errorMessage: "중복된 아이디입니다.",
