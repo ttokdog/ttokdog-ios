@@ -62,13 +62,14 @@ struct SignupView: View {
                     // MARK: - 이메일
                     VStack(alignment: .leading, spacing: 6) {
                         FieldHeader(title: "이메일")
-                        // TODO: 임시
-                        SignupPasswordInputField(text: $store.email,
-                                                 placeholder: "비밀번호를 한번 더 입력해주세요",
-                                                 isVisible: store.isPasswordConfirmVisible,
-                                                 isError: false,
-                                                 onToggleVisibility: { },
-                                                 onClear: { })
+
+                        PlainInputField(
+                            text: $store.email,
+                            placeholder: "example@example.com",
+                            isError: true,
+                            onClear: { store.send(.clearEmailTapped) }
+                        )
+                        
                         
                     }
                     
