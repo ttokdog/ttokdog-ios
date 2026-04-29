@@ -32,6 +32,7 @@ struct SignupView: View {
                             onClear: { store.send(.clearIdTapped)},
                             onDuplicateCheck: { store.send(.checkDuplicateIdTapped) }
                         )
+                        .keyboardType(.asciiCapable)
                         
                         
                     }
@@ -45,10 +46,11 @@ struct SignupView: View {
                                 text: $store.password,
                                 placeholder: "생성할 비밀번호를 입력해주세요",
                                 isVisible: store.isPasswordVisible,
-                                isError: !store.password.isEmpty,
+                                isError: store.isPasswordInvalid ,
                                 onToggleVisibility: { store.send(.togglePasswordVisibility) },
                                 onClear: { store.send(.clearPasswordTapped) }
                             )
+                            .keyboardType(.asciiCapable)
                             
                             SignupPasswordInputField(
                                 text: $store.passwordConfirm,
@@ -58,15 +60,18 @@ struct SignupView: View {
                                 onToggleVisibility: { store.send(.togglePasswordConfirmVisibility) },
                                 onClear: { store.send(.clearPasswordConfirmTapped) }
                             )
+                            .keyboardType(.asciiCapable)
                             
-                            // TODO: 에러 문구
+        
                             if !store.password.isEmpty && !store.isPasswordLengthValid {
                                 InlineValidationMessage(message: "비밀번호는 8자 이상이어야 해요.", type: .error)
                             }
                             
-                            if !store.password.isEmpty && !store.isPasswordContainsSpecialChar {
-                                InlineValidationMessage(message: "비밀번호는 특수문자를 포함해야 해요.", type: .error)
+                            
+                            if !store.password.isEmpty && (!store.isPasswordContainsLetter || !store.isPasswordContainsNumber || !store.isPasswordContainsSpecialChar) {
+                                InlineValidationMessage(message: "비밀번호는 반드시 영문/숫자/특수문자를 포함해야 해요.", type: .error)
                             }
+                            
                             
                             if store.isPasswordConfirmMismatch {
                                 InlineValidationMessage(message: "비밀번호가 일치하지 않아요. 다시 확인해주세요.", type: .error)
@@ -85,6 +90,7 @@ struct SignupView: View {
                             isError: !store.email.isEmpty && !store.isEmailValid,
                             onClear: { store.send(.clearEmailTapped) }
                         )
+                        .keyboardType(.asciiCapable)
                         
                         // TODO: 에러 문구
                         if !store.isEmailValid && !store.email.isEmpty {
@@ -107,6 +113,7 @@ struct SignupView: View {
                             onClear: { store.send(.clearNicknameTapped)},
                             onDuplicateCheck: { store.send(.checkDuplicateNicknameTapped) }
                         )
+                        .keyboardType(.asciiCapable)
                         
                     }
                     
@@ -219,8 +226,8 @@ struct SignupView: View {
                 var state = SignupFeature.State()
                 state.id = "ttokdog1"
                 state.idCheckResult = .available
-                state.password = "Test1234!"
-                state.passwordConfirm = "Test1234!"
+                state.password = "Test1234!!"
+                state.passwordConfirm = "Test1234!!"
                 state.email = "ttokdog@gmail.com"
                 state.nickname = "똑독이"
                 state.nicknameCheckResult = .available

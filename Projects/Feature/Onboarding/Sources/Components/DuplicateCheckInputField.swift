@@ -137,7 +137,7 @@ struct DuplicateCheckInputField: View {
 
 #Preview("입력중") {
     DuplicateCheckInputField(
-        text: .constant("ttoㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"),
+        text: .constant("ttokdog123"),
         minimumLength: 6,
         placeholder: "생성할 아이디를 입력해주세요",
         checkResult: nil,
