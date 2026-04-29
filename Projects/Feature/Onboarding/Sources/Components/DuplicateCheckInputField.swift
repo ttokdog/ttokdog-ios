@@ -1,12 +1,6 @@
 import SwiftUI
 import SharedDesignSystem
 
-/// 중복체크 결과 상태
-enum DuplicateCheckResult {
-    case available // 사용가능
-    case duplicate // 중복
-}
-
 // MARK: - DuplicateCheckInputField
 /// 중복확인 버튼이 포함된 텍스트 필드 컴포넌트
 /// 아이디, 닉네임 중복확인에 사용

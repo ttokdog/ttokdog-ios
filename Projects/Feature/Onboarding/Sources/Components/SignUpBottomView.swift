@@ -48,6 +48,7 @@ struct SignUpBottomView: View {
                     .foregroundStyle(isNextButtonEnabled ? Color.white : Color.gray400)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             }
+            .disabled(!isNextButtonEnabled)
             .padding(.vertical, 18)
             .padding(.horizontal, 20)
             

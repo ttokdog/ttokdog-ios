@@ -2,6 +2,13 @@ import Foundation
 import ComposableArchitecture
 
 
+/// 아이디/닉네임 중복확인 결과
+enum DuplicateCheckResult: Equatable {
+    case available // 사용가능
+    case duplicate // 중복
+}
+
+
 @Reducer
 struct SignupFeature: Reducer {
     
@@ -17,7 +24,7 @@ struct SignupFeature: Reducer {
         public var nickname: String = ""
         
         // MARK: - 아이디
-        public var idCheckResult: IDCheckResult? = nil
+        public var idCheckResult: DuplicateCheckResult? = nil
         public var isCheckingId: Bool = false
         
         // MARK: - 비밀번호
@@ -25,7 +32,7 @@ struct SignupFeature: Reducer {
         public var isPasswordConfirmVisible: Bool = false
         
         // MARK: - 닉네임
-        public var nicknameCheckResult: NicknameCheckResult? = nil
+        public var nicknameCheckResult: DuplicateCheckResult? = nil
         public var isCheckingNickname: Bool = false
         
         
@@ -45,7 +52,7 @@ struct SignupFeature: Reducer {
 
         /// 비밀번호 특수문자 포함
         public var isPasswordContainsSpecialChar: Bool {
-            let regex = #".*[!@#$%^&*].*"#
+            let regex = #".*[!@#$%^&*?].*"#
             return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: password)
         }
         
@@ -67,6 +74,18 @@ struct SignupFeature: Reducer {
             return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: nickname)
         }
         
+        /// 회원가입 버튼 활성화
+        public var isSignUpEnabled: Bool {
+            isIdValid
+            && idCheckResult == .available
+            && isPasswordLengthValid
+            && isPasswordContainsSpecialChar
+            && !isPasswordConfirmMismatch
+            && !passwordConfirm.isEmpty
+            && isEmailValid
+            && isNicknameValid
+            && nicknameCheckResult == .available
+        }
 
         
         
@@ -84,7 +103,7 @@ struct SignupFeature: Reducer {
         
         // 아이디
         case checkDuplicateIdTapped
-        case checkDuplicateIdResponse(IDCheckResult)
+        case checkDuplicateIdResponse(DuplicateCheckResult)
         case clearIdTapped
         
         
@@ -99,11 +118,14 @@ struct SignupFeature: Reducer {
         
         // 닉네임
         case checkDuplicateNicknameTapped
-        case checkDuplicateNicknameResponse(NicknameCheckResult)
+        case checkDuplicateNicknameResponse(DuplicateCheckResult)
         case clearNicknameTapped
         
         // 회원가입
         case signUpTapped
+        
+        // 로그인 하러가기
+        case loginLinkTapped
         
     }
 
@@ -117,36 +139,61 @@ struct SignupFeature: Reducer {
                 
             case .binding(_):
                 return .none
+                
             case .backButtonTapped:
+                // TODO: 네비게이션 뒤로가기 액션처리
                 return .none
+                
             case .checkDuplicateIdTapped:
+                // TODO: 아이디 중복확인 API 연결
                 return .none
+                
             case .checkDuplicateIdResponse(_):
+                // TODO: 아이디 중복확인 API 응답 처리
                 return .none
+                
             case .clearIdTapped:
                 state.id = ""
                 return .none
+                
             case .togglePasswordVisibility:
+                state.isPasswordVisible.toggle()
                 return .none
+                
             case .togglePasswordConfirmVisibility:
+                state.isPasswordConfirmVisible.toggle()
                 return .none
+                
             case .clearPasswordTapped:
                 state.password = ""
                 return .none
+                
             case .clearPasswordConfirmTapped:
                 state.passwordConfirm = ""
                 return .none
+                
             case .clearEmailTapped:
                 state.email = ""
                 return .none
+                
             case .checkDuplicateNicknameTapped:
+                // TODO: 닉네임 중복확인 API 연결
                 return .none
+                
             case .checkDuplicateNicknameResponse(_):
+                // TODO: 닉네임 중복확인 API 응답 처리
                 return .none
+                
             case .clearNicknameTapped:
                 state.nickname = ""
                 return .none
+                
             case .signUpTapped:
+                // TODO: 회원가입 액션처리
+                return .none
+                
+            case .loginLinkTapped:
+                // TODO: 로그인하러가기 액션처리
                 return .none
             }
             
@@ -155,20 +202,5 @@ struct SignupFeature: Reducer {
         
     }
     
-
-    
-    
-    
-    public enum IDCheckResult: Equatable {
-        case available // 아이디 이용가능
-        case duplicate // 아이디 중복
-        case invalidFormat // 아이디 잘못된 형식
-    }
-    
-    public enum NicknameCheckResult: Equatable {
-        case available // 닉네임 이용가능
-        case duplicate // 닉네임 중복
-    }
-    
-
 }
+
