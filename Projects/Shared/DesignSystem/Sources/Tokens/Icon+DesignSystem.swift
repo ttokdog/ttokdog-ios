@@ -38,6 +38,10 @@ public extension Image {
     static var search: Image { Image(asset: SharedDesignSystemAsset.search) }
     /// footprint - 발자국
     static var footprint: Image { Image(asset: SharedDesignSystemAsset.footprint) }
+    
+    // MARK: - 회원 가입 아이콘
+    
+    static var duplicateCheck: Image { Image(asset: SharedDesignSystemAsset.duplicateCheck) }
 
     // MARK: - 소셜 로그인 아이콘
 

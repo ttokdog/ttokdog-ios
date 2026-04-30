@@ -97,9 +97,10 @@ struct DuplicateCheckInputField: View {
         } label: {
             if checkResult == .available {
                 // TODO: 이미지 교체
-                Image.check
-                    .padding(.horizontal, 18)
-                    .padding(.vertical, 9)
+                Image.duplicateCheck
+                    .foregroundStyle(.brown)
+                    .padding(.horizontal, 22.5)
+                    .padding(.vertical, 14)
                     .background(Color.primary500)
                     .clipShape(Capsule())
             } else {

@@ -2,7 +2,7 @@ import SwiftUI
 import ComposableArchitecture
 import SharedDesignSystem
 
-struct SignupView: View {
+public struct SignupView: View {
     
     @Bindable public var store: StoreOf<SignupFeature>
 
@@ -12,7 +12,7 @@ struct SignupView: View {
     
     // MARK: - Body
     
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 0) {
             CustomNavigationBar(title: "회원가입", onBack: { })
             
@@ -113,7 +113,6 @@ struct SignupView: View {
                             onClear: { store.send(.clearNicknameTapped)},
                             onDuplicateCheck: { store.send(.checkDuplicateNicknameTapped) }
                         )
-                        .keyboardType(.asciiCapable)
                         
                     }
                     

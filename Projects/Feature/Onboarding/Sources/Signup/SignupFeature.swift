@@ -3,14 +3,15 @@ import ComposableArchitecture
 
 
 /// 아이디/닉네임 중복확인 결과
-enum DuplicateCheckResult: Equatable {
+public enum DuplicateCheckResult: Equatable {
     case available // 사용가능
     case duplicate // 중복
 }
 
 
 @Reducer
-struct SignupFeature: Reducer {
+public struct SignupFeature: Reducer {
+    public init() {}
     
     // MARK: - State
     
