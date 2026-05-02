@@ -68,7 +68,7 @@ public struct SignupView: View {
                             }
                             
                             
-                            if !store.password.isEmpty && (!store.isPasswordContainsLetter || !store.isPasswordContainsNumber || !store.isPasswordContainsSpecialChar) {
+                            if !store.password.isEmpty && (!store.isPasswordContainsAlphabet || !store.isPasswordContainsNumber || !store.isPasswordContainsSpecialChar) {
                                 InlineValidationMessage(message: "비밀번호는 반드시 영문/숫자/특수문자를 포함해야 해요.", type: .error)
                             }
                             

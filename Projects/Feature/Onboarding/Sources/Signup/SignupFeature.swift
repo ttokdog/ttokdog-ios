@@ -51,9 +51,8 @@ public struct SignupFeature: Reducer {
             (8...20).contains(password.count)
         }
         
-        // TODO: 디자이너 확인 후 에러 문구 추가 여부 결정
         /// 비밀번호 영문 포함
-        public var isPasswordContainsLetter: Bool {
+        public var isPasswordContainsAlphabet: Bool {
             let regex = #".*[a-zA-Z].*"#
             return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: password)
         }
@@ -77,10 +76,10 @@ public struct SignupFeature: Reducer {
         
         /// 비밀번호 유효성 에러 여부
         /// - 길이(8~20자) / 영문 / 숫자 / 특수문자 조건 중 하나라도 미충족 시 `true`
-        var isPasswordInvalid: Bool {
+        public var isPasswordInvalid: Bool {
             !password.isEmpty && (
                 !isPasswordLengthValid ||
-                !isPasswordContainsLetter ||
+                !isPasswordContainsAlphabet ||
                 !isPasswordContainsNumber ||
                 !isPasswordContainsSpecialChar
             )
@@ -110,6 +109,8 @@ public struct SignupFeature: Reducer {
             && isEmailValid
             && isNicknameValid
             && nicknameCheckResult == .available
+            && isPasswordContainsAlphabet
+            && isPasswordContainsNumber
         }
 
         
