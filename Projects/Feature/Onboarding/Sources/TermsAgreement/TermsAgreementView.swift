@@ -10,7 +10,7 @@ public struct TermsAgreementView: View {
     public var store: StoreOf<TermsAgreementFeature>
     
     // MARK: - init
-    init(store: StoreOf<TermsAgreementFeature>) {
+    public init(store: StoreOf<TermsAgreementFeature>) {
         self.store = store
     }
     
@@ -126,46 +126,51 @@ public struct TermsAgreementView: View {
     )
 }
 
+
 #Preview("필수 약관만 체크 - 가입 버튼 활성화") {
     TermsAgreementView(
         store: .init(
-            initialState: TermsAgreementFeature.State(
-                isTermsChecked: true,
-                isPrivacyChecked: true,
-                isThirdPartyChecked: true,
-                isAgeChecked: true
-            ),
-            reducer: { TermsAgreementFeature() }
-        )
+            initialState: {
+                var state = TermsAgreementFeature.State()
+                state.isTermsChecked = true
+                state.isPrivacyChecked = true
+                state.isThirdPartyChecked = true
+                state.isAgeChecked = true
+                return state
+            }(),
+            reducer: { TermsAgreementFeature() })
     )
 }
+
 
 #Preview("선택 약관만 체크") {
     TermsAgreementView(
         store: .init(
-            initialState: TermsAgreementFeature.State(
-                isLocationChecked: true,
-                isMarketingChecked: true
-            ),
-            reducer: { TermsAgreementFeature() }
-        )
+            initialState: {
+                var state = TermsAgreementFeature.State()
+                state.isLocationChecked = true
+                state.isMarketingChecked = true
+                return state
+            }(),
+            reducer: { TermsAgreementFeature() })
     )
+    
 }
 
 #Preview("전체 동의") {
     TermsAgreementView(
         store: .init(
-            initialState: TermsAgreementFeature.State(
-                isAllChecked: true,
-                isTermsChecked: true,
-                isPrivacyChecked: true,
-                isThirdPartyChecked: true,
-                isAgeChecked: true,
-                isLocationChecked: true,
-                isMarketingChecked: true
-            ),
-            reducer: { TermsAgreementFeature() }
-        )
+            initialState: {
+                var state = TermsAgreementFeature.State()
+                state.isAllChecked = true
+                state.isTermsChecked = true
+                state.isPrivacyChecked = true
+                state.isThirdPartyChecked = true
+                state.isAgeChecked = true
+                state.isLocationChecked = true
+                state.isMarketingChecked = true
+                return state
+            }(),
+            reducer: { TermsAgreementFeature() })
     )
 }
-

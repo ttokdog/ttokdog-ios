@@ -10,22 +10,23 @@ public struct TermsAgreementFeature: Reducer {
     // MARK: - State
     @ObservableState
     public struct State: Equatable {
-        var isAllChecked: Bool = false          // 전체동의
-        var isTermsChecked: Bool = false        // [필수] 이용약관
-        var isPrivacyChecked: Bool = false      // [필수] 개인정보 수집
-        var isThirdPartyChecked: Bool = false   // [필수] 제3자 정보제공
-        var isAgeChecked: Bool = false          // [필수] 만 14세 이상
-        var isLocationChecked: Bool = false     // [선택] 위치정보
-        var isMarketingChecked: Bool = false    // [선택] 마케팅 수신
+        public var isAllChecked: Bool = false          // 전체동의
+        public var isTermsChecked: Bool = false        // [필수] 이용약관
+        public var isPrivacyChecked: Bool = false      // [필수] 개인정보 수집
+        public var isThirdPartyChecked: Bool = false   // [필수] 제3자 정보제공
+        public var isAgeChecked: Bool = false          // [필수] 만 14세 이상
+        public var isLocationChecked: Bool = false     // [선택] 위치정보
+        public var isMarketingChecked: Bool = false    // [선택] 마케팅 수신
         
         // 필수 약관 모두 동의 여부 (가입 버튼 활성화 조건)
-        var isRequiredAllChecked: Bool {
+        public var isRequiredAllChecked: Bool {
             isTermsChecked &&
             isPrivacyChecked &&
             isThirdPartyChecked &&
             isAgeChecked
         }
         
+        public init() { }
     }
     
     // MARK: -  Action
