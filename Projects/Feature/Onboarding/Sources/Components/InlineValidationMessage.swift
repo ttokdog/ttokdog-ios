@@ -21,8 +21,8 @@ enum ValidationMessageType {
     // TODO: 디자인시스템 아이콘 반영하기
     var iconName: String {
         switch self {
-        case .error: "exclamationmark.circle.fill"
-        case .success: "checkmark.circle.fill"
+        case .error: "info.circle"
+        case .success: "checkmark.circle"
         }
     }
 }

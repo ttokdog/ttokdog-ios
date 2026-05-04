@@ -15,26 +15,30 @@ struct SignUpBottomView: View {
     let loginLinkAction: () -> Void // 로그인하러가기 버튼 탭 시 호출되는 클로저
     let nextButtonAction: () -> Void // 다음으로 버튼 탭 시 호출되는 클로저
     
+    @State private var isKeyboardVisible = false
+    
     var body: some View {
         
         VStack(spacing: 0) {
             
             // 이미 회원이신가요? 로그인하러가기
-            HStack(spacing: 4) {
-                Text("이미 회원이신가요?")
-                    .typographyText(.label3)
-                    .foregroundStyle(Color.gray400)
-                
-                Button {
-                    loginLinkAction()
-                } label: {
-                    Text("로그인하러가기")
-                        .typographyText(.label1)
-                        .foregroundStyle(Color.primary500)
+            if !isKeyboardVisible {
+                HStack(spacing: 4) {
+                    Text("이미 회원이신가요?")
+                        .typographyText(.label3)
+                        .foregroundStyle(Color.gray400)
+                    
+                    Button {
+                        loginLinkAction()
+                    } label: {
+                        Text("로그인하러가기")
+                            .typographyText(.label1)
+                            .foregroundStyle(Color.primary500)
+                    }
                 }
+                .frame(maxWidth: .infinity)
+                .padding(.top, 16)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.top, 16)
             
             // 다음으로 버튼 (활성화 여부에 따라 색상 변경)
             Button {
@@ -48,6 +52,7 @@ struct SignUpBottomView: View {
                     .foregroundStyle(isNextButtonEnabled ? Color.white : Color.gray400)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             }
+            .disabled(!isNextButtonEnabled)
             .padding(.vertical, 18)
             .padding(.horizontal, 20)
             
@@ -58,6 +63,12 @@ struct SignUpBottomView: View {
             Rectangle()
                 .padding(.top, -20) // 하단 그림자 잘라내기
         )
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
+            isKeyboardVisible = true
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+            isKeyboardVisible = false
+        }
         
     }
 }
