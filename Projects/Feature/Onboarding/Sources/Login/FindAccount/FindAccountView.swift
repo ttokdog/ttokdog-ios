@@ -33,12 +33,13 @@ public struct FindAccountView: View {
                 Spacer()
             }
             .background(Color.gray50)
-            .onTapGesture {
-                UIApplication.shared.sendAction(
-                    #selector(UIResponder.resignFirstResponder),
-                    to: nil, from: nil, for: nil
-                )
+            .navigationDestination(
+                item: $store.scope(state: \.verification, action: \.verification)
+            ) { verificationStore in
+                VerificationCodeView(store: verificationStore)
+                    .navigationBarBackButtonHidden()
             }
+            .dismissKeyboardOnTap()
 
             if store.showTempPasswordAlert {
                 tempPasswordAlertOverlay
@@ -99,18 +100,12 @@ public struct FindAccountView: View {
                 }
             }
 
-            Button {
+            PrimaryButton(
+                title: "인증번호 전송",
+                isEnabled: store.findId.isSendVerificationEnabled
+            ) {
                 store.send(.sendVerificationTapped)
-            } label: {
-                Text("인증번호 전송")
-                    .typography(.buttonL)
-                    .foregroundStyle(store.findId.isSendVerificationEnabled ? .white : Color.gray400)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 60)
-                    .background(store.findId.isSendVerificationEnabled ? Color.primary500 : Color.gray300)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
             }
-            .disabled(!store.findId.isSendVerificationEnabled)
             .padding(.top, 46)
         }
         .padding(.horizontal, 20)
@@ -155,18 +150,12 @@ public struct FindAccountView: View {
             }
             .padding(.top, 20)
 
-            Button {
+            PrimaryButton(
+                title: "임시 비밀번호 발급",
+                isEnabled: store.findPassword.isTempPasswordEnabled
+            ) {
                 store.send(.tempPasswordTapped)
-            } label: {
-                Text("임시 비밀번호 발급")
-                    .typography(.buttonL)
-                    .foregroundStyle(store.findPassword.isTempPasswordEnabled ? .white : Color.gray400)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 60)
-                    .background(store.findPassword.isTempPasswordEnabled ? Color.primary500 : Color.gray300)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
             }
-            .disabled(!store.findPassword.isTempPasswordEnabled)
             .padding(.top, 46)
 
             if let error = store.findPassword.accountNotFoundError {
