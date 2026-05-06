@@ -44,17 +44,18 @@ public struct GuardianStatusFeature: Reducer {
             switch action {
                 
             case .backButtonTapped:
-                // TODO: 네비게이션 뒤로가기
-                return .none
+                return .send(.delegate(.backTapped))
+                
             case .statusOptionTapped(let status):
                 state.selectedStatus = status
                 return .none
+                
             case .startButtonTapped:
                 guard state.isStartButtonEnabled else {
                     return .none
                 }
-                
                 return .send(.delegate(.startCompleted))
+                
             case .delegate(_):
                 return .none
             }
