@@ -41,18 +41,13 @@ struct SignUpBottomView: View {
             }
             
             // 다음으로 버튼 (활성화 여부에 따라 색상 변경)
-            Button {
+            PrimaryButton(
+                title: "다음으로",
+                isEnabled: isNextButtonEnabled,
+                height: 70
+            ) {
                 nextButtonAction()
-            } label: {
-                Text("다음으로")
-                    .typography(.buttonL)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 24)
-                    .background(isNextButtonEnabled ? Color.primary500 : Color.gray300)
-                    .foregroundStyle(isNextButtonEnabled ? Color.white : Color.gray400)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
             }
-            .disabled(!isNextButtonEnabled)
             .padding(.vertical, 18)
             .padding(.horizontal, 20)
             

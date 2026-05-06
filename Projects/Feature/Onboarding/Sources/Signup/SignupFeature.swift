@@ -17,6 +17,9 @@ public struct SignupFeature: Reducer {
     
     @ObservableState
     public struct State: Equatable {
+        /// 회원가입 정보 입력 완료 후 push되는 약관동의 화면
+        @Presents public var termsAgreement: TermsAgreementFeature.State?
+
         // MARK: - 입력값
         public var id: String = ""
         public var password: String = ""
@@ -123,36 +126,49 @@ public struct SignupFeature: Reducer {
     
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
-        
+
         // 네비게이션
         case backButtonTapped
-        
+
         // 아이디
         case checkDuplicateIdTapped
         case checkDuplicateIdResponse(DuplicateCheckResult)
         case clearIdTapped
-        
-        
+
+
         // 비밀번호
         case togglePasswordVisibility
         case togglePasswordConfirmVisibility
         case clearPasswordTapped
         case clearPasswordConfirmTapped
-        
+
         // 이메일
         case clearEmailTapped
-        
+
         // 닉네임
         case checkDuplicateNicknameTapped
         case checkDuplicateNicknameResponse(DuplicateCheckResult)
         case clearNicknameTapped
-        
+
         // 회원가입
         case signUpTapped
-        
+
         // 로그인 하러가기
         case loginLinkTapped
-        
+
+        /// 약관동의 화면 위임 액션
+        case termsAgreement(PresentationAction<TermsAgreementFeature.Action>)
+
+        // 부모(CredentialLogin)에 전달할 위임 이벤트
+        case delegate(Delegate)
+
+        @CasePathable
+        public enum Delegate: Equatable {
+            /// "로그인 하러가기" 탭 또는 약관동의 X 탭 — 회원가입 플로우 종료, 로그인 화면으로 복귀
+            case navigateToLogin
+            /// 약관동의·보호자 상태 선택까지 완료 — 회원가입 전체 플로우 종료, 메인 진입(미정)
+            case signupFlowCompleted
+        }
     }
 
     // MARK: - Reducer
@@ -167,8 +183,8 @@ public struct SignupFeature: Reducer {
                 return .none
                 
             case .backButtonTapped:
-                // TODO: 네비게이션 뒤로가기 액션처리
-                return .none
+                // 회원가입 화면 뒤로가기 → 작성 데이터 폐기 + 로그인 화면 복귀
+                return .send(.delegate(.navigateToLogin))
                 
             case .checkDuplicateIdTapped:
                 // TODO: 아이디 중복확인 API 연결
@@ -215,18 +231,34 @@ public struct SignupFeature: Reducer {
                 return .none
                 
             case .signUpTapped:
-                // TODO: 회원가입 액션처리
+                // 정보 입력 후 "다음으로" → 약관동의 화면 push
+                state.termsAgreement = TermsAgreementFeature.State()
+                return .none
+
+            case .termsAgreement(.presented(.delegate(.closeTapped))):
+                // 약관동의 X → 회원가입 작성 데이터 폐기 + 로그인 화면 복귀
+                state.termsAgreement = nil
+                return .send(.delegate(.navigateToLogin))
+
+            case .termsAgreement(.presented(.delegate(.signupFlowCompleted))):
+                state.termsAgreement = nil
+                return .send(.delegate(.signupFlowCompleted))
+
+            case .termsAgreement:
                 return .none
                 
             case .loginLinkTapped:
-                // TODO: 로그인하러가기 액션처리
+                return .send(.delegate(.navigateToLogin))
+
+            case .delegate:
                 return .none
             }
-            
+
         }
-        
-        
+        .ifLet(\.$termsAgreement, action: \.termsAgreement) {
+            TermsAgreementFeature()
+        }
     }
-    
+
 }
 

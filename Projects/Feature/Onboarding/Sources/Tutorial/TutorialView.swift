@@ -62,16 +62,8 @@ public struct TutorialView: View {
 
     // TODO: 똑독 시작하기 탭 시 튜토리얼 완료 후 이동할 화면 연결
     private var startButton: some View {
-        Button {
+        PrimaryButton(title: "똑독 시작하기", height: 70) {
             store.send(.startTapped)
-        } label: {
-            Text("똑독 시작하기")
-                .typography(.buttonL)
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 70)
-                .background(Color.primary500)
-                .clipShape(RoundedRectangle(cornerRadius: 14))
         }
     }
 
