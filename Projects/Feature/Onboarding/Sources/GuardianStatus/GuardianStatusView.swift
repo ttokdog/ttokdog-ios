@@ -16,34 +16,38 @@ public struct GuardianStatusView: View {
     // MARK: - Body
     public var body: some View {
         
-        VStack(spacing: 44) {
-            Text("똑독! 어떻게 시작할까요?")
-                .typographyText(.title1)
-                .foregroundStyle(Color.gray900)
+        VStack(spacing: 0) {
+            CustomNavigationBar(onBack: { store.send(.backButtonTapped) })
             
-            VStack(spacing: 14) {
-                statusOptionButton(
-                    title: "우리 아이를 키우고 있어요",
-                    subTitle: "지금 바로 반려견을 등록하고\n관리할 수 있어요",
-                    isSelected: store.selectedStatus == .hasPet,
-                    action: { store.send(.statusOptionTapped(.hasPet)) }
-                )
+            VStack(spacing: 44) {
+                Text("똑독! 어떻게 시작할까요?")
+                    .typographyText(.title1)
+                    .foregroundStyle(Color.gray900)
                 
-                statusOptionButton(
-                    title: "아직 키우고 있지는 않아요",
-                    subTitle: "부담 없이 둘러보며\n천천히 시작할 수 있어요",
-                    isSelected: store.selectedStatus == .noPet,
-                    action: { store.send(.statusOptionTapped(.noPet)) }
-                )
+                VStack(spacing: 14) {
+                    statusOptionButton(
+                        title: "우리 아이를 키우고 있어요",
+                        subTitle: "지금 바로 반려견을 등록하고\n관리할 수 있어요",
+                        isSelected: store.selectedStatus == .hasPet,
+                        action: { store.send(.statusOptionTapped(.hasPet)) }
+                    )
+                    
+                    statusOptionButton(
+                        title: "아직 키우고 있지는 않아요",
+                        subTitle: "부담 없이 둘러보며\n천천히 시작할 수 있어요",
+                        isSelected: store.selectedStatus == .noPet,
+                        action: { store.send(.statusOptionTapped(.noPet)) }
+                    )
+                }
+                
+                Spacer()
+                
+                startButton
+                
             }
-            
-            Spacer()
-            
-            startButton
-            
+            .padding(.top, 64)
+            .padding(.horizontal, 20)
         }
-        .padding(.top, 62)
-        .padding(.horizontal, 20)
         
     }
     
