@@ -34,12 +34,14 @@ public struct TermsAgreementFeature: Reducer {
         case binding(BindingAction<State>)
         case allCheckToggled // 전체동의 탭
         case signupButtonTapped // 동의하고 가입하기 탭
+        case closeButtonTapped // 네비게이션 닫기 탭
         case delegate(Delegate)
         // TODO: 보기 액션 추가
         
         
         public enum Delegate: Equatable {
             case signupCompleted
+            case closeTapped
         }
     }
     
@@ -73,6 +75,8 @@ public struct TermsAgreementFeature: Reducer {
                 
             case .delegate(_):
                 return .none
+            case .closeButtonTapped:
+                return Effect.send(.delegate(.closeTapped))
             }
             
         }

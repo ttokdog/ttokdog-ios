@@ -16,30 +16,36 @@ public struct TermsAgreementView: View {
     
     // MARK: - Body
     public var body: some View {
-        VStack(alignment: .leading) {
-            
-            // TODO: 상단 네비게이션바 구현하기
-            
-            Text("회원가입을 위해\n약관에 동의해주세요")
-                .typographyText(.title1)
-                .foregroundStyle(Color.gray900)
-            
-            
-            Spacer()
-            
-            
-            VStack(alignment: .leading, spacing: 13) {
-                termsAgreementAllCheckRow
-                termsAgreementRowList
-            }
-            
-            termsAgreementSignupButton
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, 4)
-        .padding(.horizontal, 20)
-        .padding(.bottom, 16)
         
+        VStack(spacing: 0) {
+            CustomNavigationBar(
+                trailing: .init(
+                    icon: Image.navigationClose,
+                    action: { store.send(.delegate(.closeTapped)) }
+                )
+            )
+            
+            VStack(alignment: .leading) {
+                Text("회원가입을 위해\n약관에 동의해주세요")
+                    .typographyText(.title1)
+                    .foregroundStyle(Color.gray900)
+                
+                
+                Spacer()
+                
+                
+                VStack(alignment: .leading, spacing: 13) {
+                    termsAgreementAllCheckRow
+                    termsAgreementRowList
+                }
+                
+                termsAgreementSignupButton
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 4)
+            .padding(.horizontal, 20)
+            .padding(.bottom, 16)
+        }
     }
     
     // MARK: - Terms Agreement All Check Row (전체동의)
