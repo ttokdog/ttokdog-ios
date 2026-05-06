@@ -34,7 +34,7 @@ public struct CustomNavigationBar: View {
             trailingView
         }
         .frame(height: 50)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 10)
     }
 
     @ViewBuilder
