@@ -43,12 +43,12 @@ public struct GuardianStatusView: View {
                 Spacer()
                 
                 startButton
-                
+
             }
             .padding(.top, 64)
             .padding(.horizontal, 20)
         }
-        
+        .background(Color.gray50)   // 다크모드에서도 일관된 배경 유지
     }
     
     // MARK: - Status Option Button

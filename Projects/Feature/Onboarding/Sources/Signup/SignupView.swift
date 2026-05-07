@@ -14,7 +14,10 @@ public struct SignupView: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-            CustomNavigationBar(title: "회원가입", onBack: { })
+            CustomNavigationBar(
+                title: "회원가입",
+                onBack: { store.send(.backButtonTapped) }
+            )
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 30) {
@@ -118,17 +121,26 @@ public struct SignupView: View {
                     
                 }
                 .padding(20)
-                
+
             } // 스크롤 블록
+            .scrollDismissesKeyboard(.interactively)   // 스크롤 시 키보드 자연 dismiss
             
             // MARK: - 하단 뷰
             SignUpBottomView(
                 isNextButtonEnabled: store.isSignUpEnabled,
-                loginLinkAction: { },
-                nextButtonAction: { }
+                loginLinkAction: { store.send(.loginLinkTapped) },
+                nextButtonAction: { store.send(.signUpTapped) }
             )
-            
-            
+
+
+        }
+        .background(Color.gray50)   // 다크모드에서도 일관된 배경 유지 (다른 온보딩 화면과 동일 톤)
+        .dismissKeyboardOnTap()
+        .navigationDestination(
+            item: $store.scope(state: \.termsAgreement, action: \.termsAgreement)
+        ) { termsStore in
+            TermsAgreementView(store: termsStore)
+                .navigationBarBackButtonHidden()
         }
     }
 }

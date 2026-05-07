@@ -54,12 +54,16 @@ public struct CredentialLoginView: View {
             FindAccountView(store: findAccountStore)
                 .navigationBarBackButtonHidden()
         }
-        .onTapGesture {
-            UIApplication.shared.sendAction(
-                #selector(UIResponder.resignFirstResponder),
-                to: nil, from: nil, for: nil
+        .navigationDestination(
+            item: $store.scope(
+                state: \.signup,
+                action: \.signup
             )
+        ) { signupStore in
+            SignupView(store: signupStore)
+                .navigationBarBackButtonHidden()
         }
+        .dismissKeyboardOnTap()
     }
 
     // MARK: - Input Fields
@@ -68,7 +72,8 @@ public struct CredentialLoginView: View {
         InputField(
             placeholder: "아이디를 입력해주세요",
             text: $store.id,
-            hasError: store.errorMessage != nil
+            hasError: store.errorMessage != nil,
+            placeholderColor: .gray400
         )
     }
 
@@ -79,25 +84,17 @@ public struct CredentialLoginView: View {
             isSecure: true,
             isPasswordVisible: store.isPasswordVisible,
             onToggleVisibility: { store.send(.togglePasswordVisibility) },
-            hasError: store.errorMessage != nil
+            hasError: store.errorMessage != nil,
+            placeholderColor: .gray400
         )
     }
 
     // MARK: - Login Button
 
     private var loginButton: some View {
-        Button {
+        PrimaryButton(title: "로그인", isEnabled: store.isLoginEnabled) {
             store.send(.loginTapped)
-        } label: {
-            Text("로그인")
-                .typography(.buttonL)
-                .foregroundStyle(store.isLoginEnabled ? .white : Color.gray400)
-                .frame(maxWidth: .infinity)
-                .frame(height: 54)
-                .background(store.isLoginEnabled ? Color.primary500 : Color.gray300)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
         }
-        .disabled(!store.isLoginEnabled)
     }
 
     // MARK: - Bottom Links

@@ -26,8 +26,6 @@ public struct FindAccountFeature {
         public var email: String = ""
         public var emailError: String?
         public var notFoundError: String?
-        // TODO: 인증번호 입력 상태 추가 (verificationCode, isVerificationSent, timer 등)
-        // TODO: 아이디 찾기 결과 상태 추가 (foundId 등)
 
         public var isSendVerificationEnabled: Bool {
             !email.isEmpty
@@ -62,6 +60,9 @@ public struct FindAccountFeature {
         public var showTempPasswordAlert: Bool = false
         // TODO: 로딩 상태 추가 (isLoading)
 
+        /// 인증번호 입력 화면 (push) — 인증번호 전송 성공 시 활성화
+        @Presents public var verification: VerificationCodeFeature.State?
+
         public init() {}
     }
 
@@ -79,6 +80,8 @@ public struct FindAccountFeature {
         // TODO: 임시 비밀번호 발급 API 응답 액션 추가
         case tempPasswordAlertConfirmed
         case backButtonTapped
+        /// 인증번호 입력 화면 위임 액션
+        case verification(PresentationAction<VerificationCodeFeature.Action>)
         case delegate(Delegate)
 
         public enum Delegate {
@@ -127,9 +130,9 @@ public struct FindAccountFeature {
                 guard state.findId.emailError == nil else {
                     return .none
                 }
-                // TODO: 인증번호 전송 API 연동
-                // TODO: API 성공 → 인증번호 입력 UI 표시, 타이머 시작
-                // TODO: API 실패 → notFoundError 설정 (가입 정보 없음)
+                // TODO: 인증번호 전송 API 연동 — 성공 시점에 push로 변경.
+                //       현재는 stub: 검증 통과 즉시 인증번호 입력 화면으로 이동.
+                state.verification = .init(maskedEmail: Self.mask(state.findId.email))
                 return .none
 
             case .tempPasswordTapped:
@@ -155,14 +158,40 @@ public struct FindAccountFeature {
             case .backButtonTapped:
                 return .none
 
+            case .verification(.presented(.delegate(.popToFindAccount))):
+                state.verification = nil
+                return .none
+
+            case .verification(.presented(.delegate(.navigateToLogin))):
+                // 인증 성공 후 로그인 화면 이동 — FindAccount도 dismiss하고 부모(CredentialLogin)에 위임 전파.
+                state.verification = nil
+                return .send(.delegate(.navigateToLogin))
+
+            case .verification:
+                return .none
+
             case .delegate:
                 return .none
             }
+        }
+        .ifLet(\.$verification, action: \.verification) {
+            VerificationCodeFeature()
         }
     }
 
     private static func isValidEmail(_ email: String) -> Bool {
         let pattern = "[A-Z0-9a-z._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,}"
         return NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: email)
+    }
+
+    /// 이메일 마스킹 — 로컬 파트 앞 3글자만 노출, 나머지는 `*` 4개로 고정. 도메인은 그대로.
+    /// 예: "ttokdog@gmail.com" → "tto****@gmail.com"
+    /// 로컬 파트가 3글자 이하면 그 자체 + `****` + `@도메인`.
+    private static func mask(_ email: String) -> String {
+        guard let atIndex = email.firstIndex(of: "@") else { return email }
+        let local = email[..<atIndex]
+        let domain = email[atIndex...]   // "@gmail.com" 포함
+        let visible = local.prefix(3)
+        return "\(visible)****\(domain)"
     }
 }

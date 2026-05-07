@@ -90,26 +90,20 @@ public struct CustomAlert<Content: View>: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
 
-                Button(action: primaryAction) {
-                    Text(primaryButtonTitle)
-                        .typography(.buttonL)
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 54)
-                        .background(Color.primary500)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                }
+                PrimaryButton(
+                    title: primaryButtonTitle,
+                    height: 54,
+                    cornerRadius: 12,
+                    action: primaryAction
+                )
             }
         } else {
-            Button(action: primaryAction) {
-                Text(primaryButtonTitle)
-                    .typography(.buttonL)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 54)
-                    .background(Color.primary500)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-            }
+            PrimaryButton(
+                title: primaryButtonTitle,
+                height: 54,
+                cornerRadius: 12,
+                action: primaryAction
+            )
         }
     }
 }

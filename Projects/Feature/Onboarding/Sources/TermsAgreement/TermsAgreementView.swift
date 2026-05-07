@@ -7,7 +7,7 @@ import SharedDesignSystem
 public struct TermsAgreementView: View {
     
     // MARK: - Properties
-    public var store: StoreOf<TermsAgreementFeature>
+    @Bindable public var store: StoreOf<TermsAgreementFeature>
     
     // MARK: - init
     public init(store: StoreOf<TermsAgreementFeature>) {
@@ -46,8 +46,15 @@ public struct TermsAgreementView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 16)
         }
+        .background(Color.gray50)   // 다크모드에서도 일관된 배경 유지
+        .navigationDestination(
+            item: $store.scope(state: \.guardianStatus, action: \.guardianStatus)
+        ) { guardianStore in
+            GuardianStatusView(store: guardianStore)
+                .navigationBarBackButtonHidden()
+        }
     }
-    
+
     // MARK: - Terms Agreement All Check Row (전체동의)
     private var termsAgreementAllCheckRow: some View {
         HStack(spacing: 8) {
